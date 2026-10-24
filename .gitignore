@@ -1,0 +1,3 @@
+# Ignore textbook slide PDFs and exams (keep repo clean and compliant)
+*.pdf
+.DS_Store

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Addie's Physics Test 2 Prep • Chapters 5, 6, 7, 8</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="badge-tag">College Physics • Dr. Greg Perugini</div>
+        <h1>Addie's Physics Test 2 Study Hub</h1>
+        <p class="subtitle">Personalized for Addie: Plain English concepts • Step-by-step algebra lifelines • Formula memory triggers</p>
+      </div>
+      <div class="stats-card">
+        <div class="stat-item">
+          <span class="stat-number" id="concept-score">0</span>
+          <span class="stat-label">Concepts Mastered</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number" id="math-streak">0</span>
+          <span class="stat-label">Math Streak 🔥</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-tab="matchmaker">
+        <span class="tab-icon">🎯</span>
+        <span>Formula Matchmaker</span>
+      </button>
+      <button class="nav-tab" data-tab="mathlab">
+        <span class="tab-icon">🧮</span>
+        <span>Scaffolded Math Lab</span>
+      </button>
+      <button class="nav-tab" data-tab="concepts">
+        <span class="tab-icon">💡</span>
+        <span>Exam Question Bank</span>
+      </button>
+      <button class="nav-tab" data-tab="traps">
+        <span class="tab-icon">🚨</span>
+        <span>Test 2 Trap Alerts</span>
+      </button>
+      <button class="nav-tab" data-tab="cheatsheet">
+        <span class="tab-icon">📋</span>
+        <span>Formula & Algebra Sheet</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="tab-content-container">
+
+      <!-- TAB 1: Formula Matchmaker -->
+      <section id="tab-matchmaker" class="tab-panel active">
+        <div class="section-intro">
+          <h2>Brute Formula Memory Drill</h2>
+          <p>Read the scenario or keyword clues. Which formula should you grab immediately?</p>
+        </div>
+
+        <div class="card matchmaker-card" id="matchmaker-container">
+          <div class="card-header">
+            <span class="topic-pill" id="mm-topic">Chapter 6</span>
+            <span class="badge" id="mm-progress">Card 1 of 6</span>
+          </div>
+          <div class="mm-scenario">
+            <h3 id="mm-prompt">Loading scenario...</h3>
+            <div class="keyword-tags" id="mm-keywords"></div>
+          </div>
+
+          <div class="mm-options" id="mm-options"></div>
+
+          <div class="feedback-box hidden" id="mm-feedback">
+            <div class="feedback-header" id="mm-feedback-header"></div>
+            <p id="mm-feedback-text"></p>
+            <div class="algebra-tip" id="mm-algebra-tip"></div>
+            <button class="primary-btn" id="mm-next-btn">Next Scenario →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Scaffolded Math Lab -->
+      <section id="tab-mathlab" class="tab-panel">
+        <div class="section-intro">
+          <h2>Scaffolded Applied Math Lab</h2>
+          <p>Step-by-step guidance for calculation problems. With pre-rearranged algebra forms so you never get stuck!</p>
+        </div>
+
+        <!-- Problem Selector -->
+        <div class="math-selector-bar">
+          <label for="math-topic-select"><strong>Choose Problem Type:</strong></label>
+          <select id="math-topic-select" class="custom-select">
+            <option value="0">Kinetic Energy (4 kg box at 15 m/s style)</option>
+            <option value="1">Speed from KE (Solving for v with square roots)</option>
+            <option value="2">Centripetal Acceleration (Outer edge spaceship)</option>
+            <option value="3">Change in Momentum (Horizontal car slowing down)</option>
+            <option value="4">Inelastic Collision (Carts sticking together)</option>
+          </select>
+          <button class="secondary-btn" id="math-randomize-btn">🎲 New Random Numbers</button>
+        </div>
+
+        <!-- Problem Card with 4-Step Scaffolding -->
+        <div class="card math-problem-card">
+          <div class="math-card-header">
+            <span class="topic-pill" id="math-problem-badge">Direct Exam Problem</span>
+            <span class="topic-name" id="math-problem-topic">Topic</span>
+          </div>
+
+          <div class="math-prompt-box">
+            <p id="math-problem-prompt">Loading problem...</p>
+          </div>
+
+          <!-- Trap Warning Alert Banner -->
+          <div class="alert-banner warning" id="math-trap-alert">
+            <span class="alert-icon">⚠️</span>
+            <span id="math-trap-text"></span>
+          </div>
+
+          <!-- Step 1: Identify Givens -->
+          <div class="scaffold-step" id="step-1">
+            <div class="step-header">
+              <span class="step-num">Step 1</span>
+              <h4>Identify What You Have & What You Need</h4>
+            </div>
+            <div class="givens-grid" id="math-givens-grid"></div>
+          </div>
+
+          <!-- Step 2: Formula & Algebra Lifeline -->
+          <div class="scaffold-step" id="step-2">
+            <div class="step-header">
+              <span class="step-num">Step 2</span>
+              <h4>Formula & Algebra Lifeline (Pre-Rearranged)</h4>
+            </div>
+            <div class="formula-callout">
+              <div class="formula-label" id="math-formula-name"></div>
+              <div class="formula-equation" id="math-raw-formula"></div>
+            </div>
+          </div>
+
+          <!-- Step 3: Calculation & Input -->
+          <div class="scaffold-step" id="step-3">
+            <div class="step-header">
+              <span class="step-num">Step 3</span>
+              <h4>Calculate Your Answer</h4>
+            </div>
+            
+            <div class="math-input-group">
+              <label for="math-user-answer">Your Answer:</label>
+              <div class="input-with-unit">
+                <input type="number" id="math-user-answer" placeholder="e.g. 450" step="any">
+                <span class="unit-badge" id="math-answer-unit">units</span>
+              </div>
+              <button class="primary-btn" id="math-check-btn">Check Answer</button>
+              <button class="ghost-btn" id="math-reveal-steps-btn">Show Step-by-Step Breakdown 💡</button>
+            </div>
+
+            <!-- Feedback & Steps Breakdown -->
+            <div class="math-feedback-box hidden" id="math-feedback"></div>
+
+            <div class="math-walkthrough hidden" id="math-walkthrough">
+              <h5>📝 Step-by-Step Calculation Breakdown:</h5>
+              <ol id="math-step-list"></ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Conceptual Exam Bank -->
+      <section id="tab-concepts" class="tab-panel">
+        <div class="section-intro">
+          <h2>Conceptual Exam Question Bank</h2>
+          <p>Real Hewitt conceptual questions from Chapters 5, 6, 7, and 8 with plain English explanations and trick warnings.</p>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="filter-bar">
+          <span class="filter-label">Filter by Topic:</span>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-chapter="all">All Topics (19)</button>
+            <button class="filter-btn" data-chapter="5">Ch 5: Newton's 3rd Law</button>
+            <button class="filter-btn" data-chapter="6">Ch 6: Momentum</button>
+            <button class="filter-btn" data-chapter="7">Ch 7: Energy & Work</button>
+            <button class="filter-btn" data-chapter="8">Ch 8: Rotational Motion</button>
+          </div>
+        </div>
+
+        <div class="question-list" id="concept-questions-list"></div>
+      </section>
+
+      <!-- TAB 4: Trap Alerts -->
+      <section id="tab-traps" class="tab-panel">
+        <div class="section-intro">
+          <h2>Test 2 Pitfall & Trap Warnings</h2>
+          <p>Don't lose easy points! These are the exact conceptual traps professors use to write multiple choice distractors.</p>
+        </div>
+
+        <div class="traps-grid" id="traps-grid"></div>
+      </section>
+
+      <!-- TAB 5: Cheat Sheet -->
+      <section id="tab-cheatsheet" class="tab-panel">
+        <div class="section-intro">
+          <h2>Formula & Algebra Quick Reference</h2>
+          <p>Every formula needed for Test 2, with pre-solved algebraic arrangements for each variable.</p>
+        </div>
+
+        <div class="cheat-grid" id="cheat-sheet-grid"></div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Built with ❤️ for Addie • RCSJ Conceptual Physics Test 2 Prep • Hosted on GitHub Pages</p>
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
