@@ -27,7 +27,7 @@ Covering **Hewitt Conceptual Physics Chapters 5, 6, 7, and 8**:
 
 - **🎯 Formula Matchmaker**: Rapid-fire flashcard drill testing which formula to grab from word clues.
 - **🧮 Scaffolded Math Lab**: Interactive problem generator with live randomizers, given/need breakdowns, pre-rearranged formula lifelines, and instant step-by-step arithmetic explanations.
-- **💡 Conceptual Question Bank**: Hewitt practice exam questions with chapter filtering, immediate answer verification, plain English explanations, and professor trick warnings.
+- **💡 Conceptual Question Bank**: 40 Hewitt practice exam questions covering Chapters 5, 6, 7, and 8 (10 per topic) with instant verification, plain English explanations, and professor trick warnings.
 - **🚨 Test 2 Trap Alerts**: 5 high-alert traps tested heavily on college physics exams.
 - **📋 Formula & Algebra Cheat Sheet**: Complete reference table with every formula pre-solved for every variable.
 - **📱 Fully Responsive**: Works seamlessly on iPhone, iPad, and laptop. Progress is saved automatically to browser storage.

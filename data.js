@@ -236,14 +236,16 @@ const TRAPS = [
   }
 ];
 
-// Conceptual Question Bank from Hewitt practice exams (Chapters 5, 6, 7, 8)
+// Expanded 40-Question Conceptual Question Bank from Hewitt practice exams & Dr. Perugini slides
 const CONCEPT_QUESTIONS = [
-  // Chapter 5: Newton's Third Law
+  // -------------------------------------------------------------
+  // CHAPTER 5: NEWTON'S THIRD LAW (10 Questions)
+  // -------------------------------------------------------------
   {
     id: "c5-1",
     chapter: 5,
     chapterTitle: "Chapter 5: Newton's Third Law",
-    question: "A player catches a ball. The action force is the impact of the ball against the player's glove. What is the reaction force?",
+    question: "A player catches a baseball. The action force is the impact of the ball against the player's glove. What is the reaction force?",
     options: [
       "The player's grip on the glove",
       "The force the glove exerts on the ball",
@@ -314,8 +316,85 @@ const CONCEPT_QUESTIONS = [
     plainEnglish: "Tension throughout a single rope pulled by $400\\text{ N}$ at each end is $400\\text{ N}$. If you tied one end to a solid tree and pulled with $400\\text{ N}$, the tree pulls back with $400\\text{ N}$ and the rope feels $400\\text{ N}$.",
     trapTip: "Do NOT add $400 + 400 = 800\\text{ N}$! A rope holding $400\\text{ N}$ must have $400\\text{ N}$ pulling both ways to remain in equilibrium."
   },
+  {
+    id: "c5-6",
+    chapter: 5,
+    chapterTitle: "Chapter 5: Newton's Third Law",
+    question: "A soccer player kicks a ball with $1500\\text{ N}$ of force. The ball exerts a reaction force against the player's foot of:",
+    options: [
+      "Somewhat less than $1500\\text{ N}$",
+      "Exactly $1500\\text{ N}$",
+      "Somewhat more than $1500\\text{ N}$",
+      "Zero, because the ball accelerates away"
+    ],
+    correct: 1,
+    plainEnglish: "Directly from Dr. Perugini's lecture slides! Foot on ball = ball on foot. The reaction force is exactly $1500\\text{ N}$.",
+    trapTip: "Movement does not change the law: action and reaction forces are always identical in magnitude."
+  },
+  {
+    id: "c5-7",
+    chapter: 5,
+    chapterTitle: "Chapter 5: Newton's Third Law",
+    question: "A rocket is able to accelerate forward in the vacuum of outer space because:",
+    options: [
+      "Its exhaust gases push against the surrounding air",
+      "The rocket pushes on the escaping exhaust gases, which in turn push forward on the rocket",
+      "Gravity pulls it forward",
+      "The vacuum pulls the rocket forward"
+    ],
+    correct: 1,
+    plainEnglish: "Rockets do NOT push against air or the launch pad! The rocket pushes mass (exhaust gas) backward; by Newton's 3rd law, the exhaust gas pushes the rocket forward.",
+    trapTip: "Common misconception: 'rockets need air to push against.' Rockets work even better in a pure vacuum!"
+  },
+  {
+    id: "c5-8",
+    chapter: 5,
+    chapterTitle: "Chapter 5: Newton's Third Law",
+    question: "A heavyweight boxer hits a heavy punching bag with a massive punch. Then he tries to hit a dangling paper napkin with the same muscular effort. Why can't he hit the napkin with high force?",
+    options: [
+      "His hand moves too fast for the napkin",
+      "The napkin cannot exert the same amount of reaction force back on his fist",
+      "The napkin has too much air resistance",
+      "Energy is not conserved on paper"
+    ],
+    correct: 1,
+    plainEnglish: "You can only exert as much force as the other object can push back with! A flimsy paper napkin cannot push back with $500\\text{ N}$, so you cannot exert $500\\text{ N}$ on it.",
+    trapTip: "Force requires a mutual interaction: no reaction means no action force possible."
+  },
+  {
+    id: "c5-9",
+    chapter: 5,
+    chapterTitle: "Chapter 5: Newton's Third Law",
+    question: "When you walk across a level floor, the force that physically propels you forward is:",
+    options: [
+      "Your own feet pushing backward against your legs",
+      "The floor pushing forward against your shoes",
+      "Air pressure pushing behind your back",
+      "Your momentum carrying your body forward"
+    ],
+    correct: 1,
+    plainEnglish: "You push backward against the floor with your shoes. The floor pushes forward on your shoes! That floor reaction force is what accelerates you across the room.",
+    trapTip: "If you try walking on frictionless ice, your feet slip because the floor cannot push you forward."
+  },
+  {
+    id: "c5-10",
+    chapter: 5,
+    chapterTitle: "Chapter 5: Newton's Third Law",
+    question: "An airplane flies due north at $80\\text{ km/h}$ while a crosswind blows due east at $60\\text{ km/h}$. What is the plane's ground speed?",
+    options: [
+      "$20\\text{ km/h}$",
+      "$140\\text{ km/h}$",
+      "$100\\text{ km/h}$",
+      "$80\\text{ km/h}$"
+    ],
+    correct: 2,
+    plainEnglish: "Perpendicular vectors form a right triangle: $v = \\sqrt{v_{\\text{north}}^2 + v_{\\text{east}}^2} = \\sqrt{80^2 + 60^2} = \\sqrt{6400 + 3600} = \\sqrt{10000} = 100\\text{ km/h}$!",
+    trapTip: "Never add perpendicular vectors like ordinary numbers ($80 + 60 \\neq 140$). Use the Pythagorean theorem ($3-4-5$ triangle)!"
+  },
 
-  // Chapter 6: Momentum
+  // -------------------------------------------------------------
+  // CHAPTER 6: MOMENTUM & IMPULSE (10 Questions)
+  // -------------------------------------------------------------
   {
     id: "c6-1",
     chapter: 6,
@@ -391,8 +470,85 @@ const CONCEPT_QUESTIONS = [
     plainEnglish: "Initial momentum = $(5\\text{ kg})(4\\text{ m/s}) = 20\\text{ kg}\\cdot\\text{m/s}$. After sticking, total mass = $5 + 5 = 10\\text{ kg}$. Speed $v_f = \\frac{20}{10} = 2\\text{ m/s}$. (Mass doubled, so speed halved!)",
     trapTip: "When identical masses stick to a stationary one, the speed is simply cut in half."
   },
+  {
+    id: "c6-6",
+    chapter: 6,
+    chapterTitle: "Chapter 6: Momentum & Impulse",
+    question: "A heavy iron cannonball and a light wooden ball of the same size are dropped simultaneously from a tall tower (neglecting air resistance). As they hit the ground, the iron ball has:",
+    options: [
+      "Greater acceleration than the wooden ball",
+      "Greater speed than the wooden ball",
+      "Greater momentum than the wooden ball",
+      "All of the above"
+    ],
+    correct: 2,
+    plainEnglish: "Both balls fall with the exact same acceleration ($g$) and reach the exact same speed. But because the iron ball has vastly more mass ($m$), its momentum ($p = mv$) is much greater!",
+    trapTip: "Don't say acceleration or speed is greater—gravity accelerates all falling objects equally in free fall."
+  },
+  {
+    id: "c6-7",
+    chapter: 6,
+    chapterTitle: "Chapter 6: Momentum & Impulse",
+    question: "Why does a cannon with a longer barrel shoot a cannonball faster than a cannon with a short barrel, assuming the same explosive charge?",
+    options: [
+      "The longer barrel exerts a greater force on the ball",
+      "The force acts on the cannonball for a longer period of time, giving it a greater impulse",
+      "The cannonball's mass decreases as it travels down the barrel",
+      "Air resistance is lower inside a long barrel"
+    ],
+    correct: 1,
+    plainEnglish: "Impulse is Force $\\times$ Time ($F \\Delta t = \\Delta p$). The explosive gas pushes with average force $F$ over a longer time $\\Delta t$ down the longer barrel, delivering a bigger impulse and higher exit velocity!",
+    trapTip: "The average force is roughly the same; it is the DURATION of contact time that increases impulse."
+  },
+  {
+    id: "c6-8",
+    chapter: 6,
+    chapterTitle: "Chapter 6: Momentum & Impulse",
+    question: "A runaway truck moving at $60\\text{ mph}$ can be stopped by driving into a giant haystack or into a concrete wall. Compared to hitting the wall, hitting the haystack results in:",
+    options: [
+      "A smaller change in momentum",
+      "A smaller impulse",
+      "The same change in momentum, but a much smaller impact force because time is lengthened",
+      "A greater impact force"
+    ],
+    correct: 2,
+    plainEnglish: "Stopping means changing momentum from $mv$ to $0$. That change in momentum $\\Delta p$ (and therefore impulse) is IDENTICAL in both cases! The haystack spreads the impulse over several seconds, dramatically reducing force.",
+    trapTip: "Trick distractor: 'Haystack gives less impulse.' False! Impulse is identical because the change in momentum to come to a stop is identical."
+  },
+  {
+    id: "c6-9",
+    chapter: 6,
+    chapterTitle: "Chapter 6: Momentum & Impulse",
+    question: "A $4\\text{ kg}$ big fish swimming at $3\\text{ m/s}$ swallows an unsuspecting $2\\text{ kg}$ fish at rest. What is the speed of the big fish immediately after lunch?",
+    options: [
+      "$3\\text{ m/s}$",
+      "$2\\text{ m/s}$",
+      "$1.5\\text{ m/s}$",
+      "$1\\text{ m/s}$"
+    ],
+    correct: 1,
+    plainEnglish: "Classic Hewitt problem! Initial momentum = $(4\\text{ kg})(3\\text{ m/s}) = 12\\text{ kg}\\cdot\\text{m/s}$. Combined mass = $4 + 2 = 6\\text{ kg}$. Final speed $v_f = \\frac{12}{6} = 2\\text{ m/s}$!",
+    trapTip: "Swallowing another fish is an inelastic collision: $(m_1 + m_2)v_f = m_1 v_1$."
+  },
+  {
+    id: "c6-10",
+    chapter: 6,
+    chapterTitle: "Chapter 6: Momentum & Impulse",
+    question: "Conservation of momentum applies to which types of collisions?",
+    options: [
+      "Only perfectly elastic collisions where objects bounce without heat",
+      "Only inelastic collisions where objects stick together",
+      "Both elastic and inelastic collisions, as long as net external force is zero",
+      "Only collisions involving identical masses"
+    ],
+    correct: 2,
+    plainEnglish: "Momentum is ALWAYS conserved in collisions as long as no external net force acts on the system! This is true whether objects bounce cleanly or smash and stick together.",
+    trapTip: "Kinetic energy is only conserved in elastic collisions, but MOMENTUM is conserved in all collisions."
+  },
 
-  // Chapter 7: Energy
+  // -------------------------------------------------------------
+  // CHAPTER 7: ENERGY & WORK (10 Questions)
+  // -------------------------------------------------------------
   {
     id: "c7-1",
     chapter: 7,
@@ -468,8 +624,85 @@ const CONCEPT_QUESTIONS = [
     plainEnglish: "Work $= F \\cdot d = mgh$. Sack 1: $(50)(g)(2) = 100g$. Sack 2: $(25)(g)(4) = 100g$. Both require identical work (approx. $980\\text{ Joules}$)!",
     trapTip: "Half the weight over twice the height equals the exact same product: $50 \\times 2 = 25 \\times 4 = 100$."
   },
+  {
+    id: "c7-6",
+    chapter: 7,
+    chapterTitle: "Chapter 7: Energy & Work",
+    question: "Suppose the potential energy of a drawn bow is $50\\text{ Joules}$, and the kinetic energy of the shot arrow is $40\\text{ Joules}$. What happened to the remaining $10\\text{ Joules}$?",
+    options: [
+      "Energy was not conserved in this action",
+      "10 Joules went into slightly warming the bow and surrounding air",
+      "10 Joules were converted into gravitational mass",
+      "10 Joules are mysteriously lost from the universe"
+    ],
+    correct: 1,
+    plainEnglish: "Directly from Dr. Perugini's lecture slides! Energy is strictly conserved. If $50\\text{ J}$ of stored potential energy yields $40\\text{ J}$ of arrow kinetic energy, the other $10\\text{ J}$ turned into thermal energy (heat) warming the bow.",
+    trapTip: "Energy is never lost or destroyed; unaccounted energy always manifests as thermal energy (heat/friction)."
+  },
+  {
+    id: "c7-7",
+    chapter: 7,
+    chapterTitle: "Chapter 7: Energy & Work",
+    question: "A motor lifts a $100\\text{ kg}$ crate a vertical height of $2\\text{ m}$ in $4\\text{ seconds}$ (using $g = 10\\text{ m/s}^2$). What power is delivered by the motor?",
+    options: [
+      "$2000\\text{ W}$",
+      "$500\\text{ W}$",
+      "$250\\text{ W}$",
+      "$8000\\text{ W}$"
+    ],
+    correct: 1,
+    plainEnglish: "Work done $= mgh = (100)(10)(2) = 2000\\text{ Joules}$. Power is Work divided by Time: $P = \\frac{2000\\text{ J}}{4\\text{ s}} = 500\\text{ Watts}$!",
+    trapTip: "Power is rate of doing work ($P = \\frac{W}{t}$). Always divide total energy by seconds."
+  },
+  {
+    id: "c7-8",
+    chapter: 7,
+    chapterTitle: "Chapter 7: Energy & Work",
+    question: "A lever allows you to lift a heavy $100\\text{ N}$ crate by applying an input force of only $25\\text{ N}$ through a distance of $1\\text{ meter}$. How high does the crate rise?",
+    options: [
+      "$0.25\\text{ meters (25 cm)}$",
+      "$1\\text{ meter}$",
+      "$4\\text{ meters}$",
+      "$0.5\\text{ meters}$"
+    ],
+    correct: 0,
+    plainEnglish: "Work input equals Work output: $(F \\cdot d)_{\\text{in}} = (F \\cdot d)_{\\text{out}}$. Input $= (25\\text{ N})(1\\text{ m}) = 25\\text{ J}$. Output $= (100\\text{ N})(h)$. So $h = \\frac{25}{100} = 0.25\\text{ m} = 25\\text{ cm}$!",
+    trapTip: "You get 4 times the force, but you pay for it with 4 times less distance. Energy is conserved!"
+  },
+  {
+    id: "c7-9",
+    chapter: 7,
+    chapterTitle: "Chapter 7: Energy & Work",
+    question: "A machine takes in $100\\text{ Joules}$ of energy and performs $40\\text{ Joules}$ of useful work output. What is the machine's efficiency?",
+    options: [
+      "$40\\%$",
+      "$60\\%$",
+      "$2.5\\%$",
+      "$100\\%$"
+    ],
+    correct: 0,
+    plainEnglish: "Efficiency $= \\frac{\\text{Useful Work Output}}{\\text{Total Energy Input}} = \\frac{40\\text{ J}}{100\\text{ J}} = 0.40 = 40\\%$. The remaining $60\\%$ is lost to heat/friction.",
+    trapTip: "Efficiency can never exceed $100\\%$ because no machine can output more energy than was put into it."
+  },
+  {
+    id: "c7-10",
+    chapter: 7,
+    chapterTitle: "Chapter 7: Energy & Work",
+    question: "Can an ideal, frictionless machine ever multiply energy?",
+    options: [
+      "Yes, if the lever arm is long enough",
+      "Yes, hydraulic presses multiply energy",
+      "NO! Energy cannot be multiplied or created by any machine",
+      "Only in quantum mechanics"
+    ],
+    correct: 2,
+    plainEnglish: "The fundamental law of nature: Machines can multiply FORCE, and machines can multiply DISTANCE, but NO machine can EVER multiply or create ENERGY!",
+    trapTip: "If an exam question asks if a machine can multiply energy, the answer is always an absolute NO."
+  },
 
-  // Chapter 8: Rotational Motion
+  // -------------------------------------------------------------
+  // CHAPTER 8: ROTATIONAL MOTION & TORQUE (10 Questions)
+  // -------------------------------------------------------------
   {
     id: "c8-1",
     chapter: 8,
@@ -544,6 +777,81 @@ const CONCEPT_QUESTIONS = [
     correct: 1,
     plainEnglish: "The long pole puts mass far out from her body, greatly increasing her rotational inertia ($I = m r^2$). This makes it resist tipping over, giving her plenty of time to re-balance!",
     trapTip: "Rotational inertia resists changes in rotation. Mass far from the pivot = huge resistance to toppling."
+  },
+  {
+    id: "c8-6",
+    chapter: 8,
+    chapterTitle: "Chapter 8: Rotational Motion",
+    question: "A solid sphere, a solid cylinder, and a hollow hoop (all having the same mass and radius) are released from rest at the top of an incline. Which one wins the race to the bottom?",
+    options: [
+      "The hollow hoop",
+      "The solid cylinder",
+      "The solid sphere",
+      "All three reach the bottom at the exact same time"
+    ],
+    correct: 2,
+    plainEnglish: "Classic Hewitt exam problem! Rotational inertia resists rolling. The object with its mass closest to the center has the LEAST rotational inertia ($I_{\\text{sphere}} = \\frac{2}{5}mr^2$). Less energy goes into rotating, so it accelerates fastest and wins the race!",
+    trapTip: "Least rotational inertia = quickest to roll down = Solid Sphere wins! (Hollow hoop is slowest)."
+  },
+  {
+    id: "c8-7",
+    chapter: 8,
+    chapterTitle: "Chapter 8: Rotational Motion",
+    question: "Why are railroad train wheel rims slightly tapered (conical) rather than flat cylinders?",
+    options: [
+      "To reduce manufacturing cost",
+      "So that when turning a curve, the outer wheel rides on a wider diameter, giving it a higher linear speed than the inner wheel",
+      "To prevent brake overheating",
+      "To increase the weight on the rails"
+    ],
+    correct: 1,
+    plainEnglish: "When train tracks curve, the outer track is longer than the inner track. Tapered wheels automatically slide so the outer wheel rides on its wider radius ($v = r\\omega$), traveling faster without skidding!",
+    trapTip: "Tapered rims enable differential linear speed without needing a complex car-like differential gear."
+  },
+  {
+    id: "c8-8",
+    chapter: 8,
+    chapterTitle: "Chapter 8: Rotational Motion",
+    question: "Does the centripetal force acting on the Moon orbiting Earth do any physical work on the Moon?",
+    options: [
+      "Yes, a huge amount of positive work that keeps it moving",
+      "Yes, negative work that slows the orbit",
+      "NO! Centripetal force does ZERO work because force is at right angles ($90^\\circ$) to motion",
+      "Only during a lunar eclipse"
+    ],
+    correct: 2,
+    plainEnglish: "Work $= F \\cdot d \\cdot \\cos(\\theta)$. Centripetal force points straight inward toward Earth, while orbital motion is tangential. The angle is exactly $90^\\circ$. Since $\\cos(90^\\circ) = 0$, centripetal force does ZERO work!",
+    trapTip: "Centripetal forces change an object's DIRECTION of motion, but they do NO work and cannot change kinetic energy."
+  },
+  {
+    id: "c8-9",
+    chapter: 8,
+    chapterTitle: "Chapter 8: Rotational Motion",
+    question: "Two children are balanced on a see-saw. If one child leans inward toward the fulcrum (pivot), what happens?",
+    options: [
+      "That child's side will sink downward",
+      "That child's side will rise upward",
+      "Nothing, because their weight did not change",
+      "The see-saw will slide sideways"
+    ],
+    correct: 1,
+    plainEnglish: "Torque is Weight $\\times$ Distance to pivot. Leaning inward decreases the distance ($d$). Less distance means less downward torque! The other child's side now has more torque, causing the leaning child to rise up.",
+    trapTip: "Torque depends on both weight AND distance from pivot ($W \\cdot d$)."
+  },
+  {
+    id: "c8-10",
+    chapter: 8,
+    chapterTitle: "Chapter 8: Rotational Motion",
+    question: "What is the key difference between linear momentum and angular momentum?",
+    options: [
+      "Linear momentum is conserved, but angular momentum is never conserved",
+      "Linear momentum is $p = mv$ (straight line), while angular momentum is $L = I\\omega = mvr$ (rotation about an axis)",
+      "Angular momentum only exists on Earth",
+      "There is no difference; they have the same units"
+    ],
+    correct: 1,
+    plainEnglish: "Linear momentum applies to moving in a line ($p = mv$, units $\\text{kg}\\cdot\\text{m/s}$). Angular momentum applies to rotating objects and includes radial distance and spin rate ($L = mvr$, units $\\text{kg}\\cdot\\text{m}^2/\\text{s}$).",
+    trapTip: "Angular momentum always involves radial distance from the rotational axis."
   }
 ];
 
