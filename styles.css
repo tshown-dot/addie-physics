@@ -1,4 +1,5 @@
 /* Modern Clean CSS for Addie's Physics App */
+/* Enhanced with KaTeX Typography */
 
 :root {
   --primary: #4f46e5;
@@ -255,7 +256,7 @@ body {
   font-weight: 700;
   margin-bottom: 12px;
   color: var(--dark);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .keyword-tags {
@@ -279,7 +280,7 @@ body {
 .mm-options {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 20px;
 }
 
@@ -293,14 +294,14 @@ body {
   background: white;
   border: 2px solid var(--gray-200);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 16px 18px;
   text-align: left;
   font-family: inherit;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .mm-opt-btn:hover:not(:disabled) {
@@ -316,10 +317,12 @@ body {
 }
 
 .mm-opt-eq {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.95rem;
+  font-size: 1.18rem;
   color: var(--primary);
   font-weight: 600;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
 }
 
 .mm-opt-btn.correct {
@@ -336,7 +339,7 @@ body {
 .feedback-box {
   background: var(--gray-50);
   border-left: 4px solid var(--primary);
-  padding: 16px 20px;
+  padding: 18px 22px;
   border-radius: var(--radius-sm);
   margin-top: 16px;
   animation: fadeIn 0.2s ease;
@@ -355,23 +358,25 @@ body {
 .feedback-header {
   font-weight: 700;
   font-size: 1.05rem;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .feedback-box p {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   color: var(--gray-700);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  line-height: 1.6;
 }
 
 .algebra-tip {
   background: white;
   border: 1px dashed var(--gray-200);
   border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  font-size: 0.88rem;
+  padding: 12px 16px;
+  font-size: 0.92rem;
   color: var(--gray-700);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  line-height: 1.6;
 }
 
 /* Buttons */
@@ -380,7 +385,7 @@ body {
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  padding: 10px 20px;
+  padding: 10px 22px;
   font-family: inherit;
   font-weight: 600;
   font-size: 0.95rem;
@@ -475,10 +480,10 @@ body {
 .math-prompt-box {
   background: var(--gray-50);
   border-radius: var(--radius-md);
-  padding: 18px 20px;
+  padding: 18px 22px;
   margin-bottom: 18px;
-  font-size: 1.15rem;
-  line-height: 1.5;
+  font-size: 1.18rem;
+  line-height: 1.6;
   border-left: 4px solid #6366f1;
 }
 
@@ -490,7 +495,8 @@ body {
   border-radius: var(--radius-md);
   padding: 12px 16px;
   margin-bottom: 20px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .alert-banner.warning {
@@ -500,7 +506,7 @@ body {
 }
 
 .alert-icon {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   line-height: 1;
 }
 
@@ -508,7 +514,7 @@ body {
 .scaffold-step {
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-md);
-  padding: 18px;
+  padding: 20px;
   margin-bottom: 16px;
   background: white;
 }
@@ -526,49 +532,50 @@ body {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  padding: 3px 8px;
+  padding: 4px 8px;
   border-radius: 4px;
 }
 
 .step-header h4 {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--dark);
 }
 
 .givens-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
 }
 
 .given-chip {
   background: var(--gray-50);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
-  padding: 10px 14px;
+  padding: 12px 14px;
 }
 
 .given-label {
   font-size: 0.75rem;
   color: var(--gray-500);
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   display: block;
+  margin-bottom: 2px;
 }
 
 .given-val {
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: var(--dark);
-  font-family: 'JetBrains Mono', monospace;
 }
 
 .formula-callout {
   background: #f5f3ff;
   border: 1px solid #ddd6fe;
-  border-radius: var(--radius-sm);
-  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  text-align: center;
 }
 
 .formula-label {
@@ -576,23 +583,27 @@ body {
   font-weight: 700;
   color: #6d28d9;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
 }
 
 .formula-equation {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: #4338ca;
+  padding: 8px 0;
+}
+
+.formula-equation .katex-display {
+  margin: 6px 0;
 }
 
 .math-input-group {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  margin-top: 12px;
+  gap: 14px;
+  margin-top: 14px;
 }
 
 .input-with-unit {
@@ -613,7 +624,7 @@ body {
   padding: 10px 14px;
   border: none;
   outline: none;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
   width: 140px;
@@ -622,17 +633,18 @@ body {
 .unit-badge {
   background: var(--gray-100);
   color: var(--gray-700);
-  padding: 10px 12px;
-  font-size: 0.85rem;
+  padding: 10px 14px;
+  font-size: 0.9rem;
   font-weight: 600;
   border-left: 1px solid var(--gray-200);
 }
 
 .math-feedback-box {
   margin-top: 16px;
-  padding: 14px 18px;
+  padding: 16px 20px;
   border-radius: var(--radius-sm);
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .math-feedback-box.correct {
@@ -650,26 +662,31 @@ body {
 .math-walkthrough {
   background: var(--gray-50);
   border: 1px solid var(--gray-200);
-  border-radius: var(--radius-sm);
-  padding: 18px 22px;
-  margin-top: 16px;
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin-top: 18px;
 }
 
 .math-walkthrough h5 {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   color: var(--dark);
 }
 
 .math-walkthrough ol {
-  padding-left: 20px;
+  padding-left: 24px;
 }
 
 .math-walkthrough li {
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+  margin-bottom: 14px;
+  font-size: 1rem;
   color: var(--gray-700);
+  line-height: 1.6;
+}
+
+.math-walkthrough li .katex-display {
+  margin: 6px 0;
 }
 
 /* Concept Questions */
@@ -727,7 +744,7 @@ body {
   background: white;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-md);
-  padding: 20px;
+  padding: 22px;
   margin-bottom: 18px;
   box-shadow: var(--shadow-sm);
   transition: border-color 0.2s;
@@ -744,11 +761,11 @@ body {
 }
 
 .q-title {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--dark);
   margin-bottom: 16px;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .q-options {
@@ -761,13 +778,13 @@ body {
 .q-opt {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   background: var(--gray-50);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
-  padding: 12px 16px;
+  padding: 14px 18px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 1rem;
   transition: all 0.2s;
   text-align: left;
 }
@@ -781,13 +798,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: white;
   border: 1px solid var(--gray-200);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--gray-700);
   flex-shrink: 0;
 }
@@ -821,7 +838,7 @@ body {
   background: #f8fafc;
   border-left: 3px solid var(--primary);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 14px 18px;
+  padding: 16px 20px;
   margin-top: 14px;
 }
 
@@ -835,18 +852,20 @@ body {
 }
 
 .q-explanation p {
-  font-size: 0.92rem;
+  font-size: 0.98rem;
   color: var(--gray-700);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  line-height: 1.6;
 }
 
 .q-trap-tip {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #92400e;
   background: #fffbeb;
-  padding: 6px 10px;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border-radius: 6px;
   display: inline-block;
+  line-height: 1.5;
 }
 
 /* Traps Grid */
@@ -866,11 +885,11 @@ body {
   background: white;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-md);
-  padding: 22px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .trap-card-header {
@@ -880,20 +899,22 @@ body {
 }
 
 .trap-card h3 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--dark);
+  line-height: 1.4;
 }
 
 .trap-desc {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   color: var(--gray-700);
+  line-height: 1.55;
 }
 
 .trap-rule-box {
   background: #f8fafc;
   border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  padding: 14px 16px;
   border: 1px dashed var(--gray-200);
 }
 
@@ -902,21 +923,23 @@ body {
   font-size: 0.82rem;
   text-transform: uppercase;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .trap-rule-box p {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--dark);
+  line-height: 1.6;
 }
 
 .trap-mnemonic {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #4338ca;
   background: #eef2ff;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: 6px;
+  line-height: 1.5;
 }
 
 /* Cheat Sheet Grid */
@@ -936,65 +959,81 @@ body {
   background: white;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-md);
-  padding: 22px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
 }
 
 .cheat-card h3 {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .cheat-equation {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--primary);
   background: var(--primary-light);
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-bottom: 12px;
-  display: inline-block;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.cheat-equation .katex-display {
+  margin: 4px 0;
 }
 
 .cheat-plain {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--gray-700);
   margin-bottom: 14px;
+  line-height: 1.55;
 }
 
 .cheat-algebra-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   margin-top: 10px;
 }
 
 .cheat-algebra-table th {
   text-align: left;
-  padding: 6px 8px;
+  padding: 8px 10px;
   background: var(--gray-50);
   color: var(--gray-500);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 .cheat-algebra-table td {
-  padding: 8px;
+  padding: 10px 8px;
   border-top: 1px solid var(--gray-100);
+  vertical-align: middle;
 }
 
-.cheat-algebra-table code {
-  font-family: 'JetBrains Mono', monospace;
+.table-math-cell {
+  font-size: 1.12rem;
+  color: #4338ca;
   font-weight: 600;
-  color: #6d28d9;
 }
 
 /* Utility */
 .hidden {
   display: none !important;
+}
+
+/* KaTeX Overrides for supreme readability */
+.katex {
+  font-size: 1.05em;
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
 }
 
 /* Footer */

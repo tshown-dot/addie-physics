@@ -1,4 +1,5 @@
 // Addie's Physics Test 2 Mastery App Logic
+// Powered by KaTeX for textbook-grade mathematical typography
 
 document.addEventListener("DOMContentLoaded", () => {
   // App State
@@ -11,49 +12,85 @@ document.addEventListener("DOMContentLoaded", () => {
     currentFilter: "all"
   };
 
+  // Helper function to safely render LaTeX string to HTML
+  function tex(latex, displayMode = false) {
+    if (window.katex) {
+      try {
+        return window.katex.renderToString(latex, {
+          displayMode: displayMode,
+          throwOnError: false
+        });
+      } catch (err) {
+        console.warn("KaTeX render error:", err);
+        return latex;
+      }
+    }
+    return latex;
+  }
+
+  // Helper to run KaTeX auto-render on any DOM element
+  function renderAllMath(element) {
+    const target = element || document.body;
+    if (window.renderMathInElement) {
+      try {
+        window.renderMathInElement(target, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+          ],
+          throwOnError: false
+        });
+      } catch (e) {
+        console.warn("renderMathInElement error:", e);
+      }
+    }
+  }
+
   // Matchmaker Drill Scenarios
   const MATCHMAKER_SCENARIOS = [
     {
-      prompt: "A moving box of mass 4 kg slides across a table at 15 m/s. You need to calculate its energy of motion.",
+      prompt: "A moving box of mass $4\\text{ kg}$ slides across a table at $15\\text{ m/s}$. You need to calculate its energy of motion.",
       keywords: ["mass (m)", "speed (v)", "energy of motion"],
       correctFormulaId: "kinetic-energy",
-      reason: "When given mass and speed and asked for energy of motion, grab Kinetic Energy: KE = ½ m v²."
+      reason: "When given mass and speed and asked for energy of motion, grab Kinetic Energy: $KE = \\frac{1}{2} m v^2$."
     },
     {
-      prompt: "An airbag in a car inflates during a crash, spreading the collision over a longer duration (Δt) to reduce the force felt by the passenger.",
-      keywords: ["cushion / airbag", "time of contact (Δt)", "impact force (F)", "stopping momentum"],
+      prompt: "An airbag in a car inflates during a crash, spreading the collision over a longer duration ($\\Delta t$) to reduce the force felt by the passenger.",
+      keywords: ["cushion / airbag", "time of contact (\\Delta t)", "impact force (F)", "stopping momentum"],
       correctFormulaId: "impulse-momentum",
-      reason: "Any question discussing cushioning, airbags, follow-through, or force over time uses Impulse-Momentum: F Δt = Δp."
+      reason: "Any question discussing cushioning, airbags, follow-through, or force over time uses Impulse-Momentum: $F \\Delta t = \\Delta p$."
     },
     {
-      prompt: "A cylindrical space habitat with radius r = 600 m rotates at speed v = 40 m/s to simulate gravity. What is the acceleration on the outer rim?",
+      prompt: "A cylindrical space habitat with radius $r = 600\\text{ m}$ rotates at speed $v = 40\\text{ m/s}$ to simulate gravity. What is the inward acceleration on the outer rim?",
       keywords: ["circular radius (r)", "speed on rim (v)", "outer edge acceleration"],
       correctFormulaId: "centripetal-acceleration",
-      reason: "Acceleration while turning or spinning in a circle is Centripetal Acceleration: ac = v² / r."
+      reason: "Acceleration while turning or spinning in a circle is Centripetal Acceleration: $a_c = \\frac{v^2}{r}$."
     },
     {
-      prompt: "A 3 kg cart rolling at 8 m/s slams into a resting 5 kg cart, and their velcro bumpers make them latch and stick together.",
+      prompt: "A $3\\text{ kg}$ cart rolling at $8\\text{ m/s}$ slams into a resting $5\\text{ kg}$ cart, and their velcro bumpers make them latch and stick together.",
       keywords: ["stick together", "two masses combine", "collision speed"],
       correctFormulaId: "inelastic-collision",
-      reason: "'Stick together' or 'couple together' triggers the Inelastic Collision formula: (m₁ + m₂)vf = m₁v₁ + m₂v₂."
+      reason: "'Stick together' or 'couple together' triggers the Inelastic Collision formula: $(m_1 + m_2) v_f = m_1 v_1 + m_2 v_2$."
     },
     {
-      prompt: "A mechanic uses a long 0.5-meter pipe over a wrench to more easily turn and loosen a stubborn, rusted lug nut.",
+      prompt: "A mechanic uses a long $0.5\\text{-meter}$ pipe over a wrench to more easily turn and loosen a stubborn, rusted lug nut.",
       keywords: ["wrench", "distance from hinge / bolt", "turning force", "lever arm"],
       correctFormulaId: "torque",
-      reason: "Twisting or rotating around a pivot using a lever arm is Torque: τ = Force × Lever Arm."
+      reason: "Twisting or rotating around a pivot using a lever arm is Torque: $\\tau = F \\times d_\\perp$."
     },
     {
-      prompt: "A car moving at 20 m/s hits the brakes and slows to a stop. You need to calculate the change in momentum.",
+      prompt: "A car moving horizontally at $20\\text{ m/s}$ hits the brakes and slows to a stop. You need to calculate the change in momentum.",
       keywords: ["car slowing down", "mass and change in velocity", "momentum change"],
       correctFormulaId: "impulse-momentum",
-      reason: "Change in momentum is Δp = m(vf - vi). Remember: horizontal car, so never use g = 9.8!"
+      reason: "Change in momentum is $\\Delta p = m(v_f - v_i)$. Remember: horizontal car, so never use $g = 9.8\\text{ m/s}^2$!"
     },
     {
-      prompt: "A 1000 kg car speeds up from 10 m/s to 30 m/s. How much work was done by the engine?",
+      prompt: "A $1000\\text{ kg}$ car speeds up from $10\\text{ m/s}$ to $30\\text{ m/s}$. How much work was done by the engine?",
       keywords: ["work done", "change in speed", "kinetic energy change"],
       correctFormulaId: "work-energy",
-      reason: "Work-Energy Theorem: Net Work = change in kinetic energy (W = ΔKE = ½ m vf² - ½ m vi²)."
+      reason: "Work-Energy Theorem: Net Work = change in kinetic energy ($W = \\Delta KE = \\frac{1}{2} m v_f^2 - \\frac{1}{2} m v_i^2$)."
     }
   ];
 
@@ -82,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (targetPanel) {
         targetPanel.classList.add("active");
         window.scrollTo({ top: 0, behavior: "smooth" });
+        renderAllMath(targetPanel);
       }
     });
   });
@@ -111,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Render keyword tags
     mmKeywords.innerHTML = scenario.keywords.map(kw => `<span class="keyword-tag">🔍 ${kw}</span>`).join("");
 
-    // Prepare 4 choices: the correct formula + 3 distractors
+    // Prepare 4 choices: correct formula + 3 distractors
     const distractors = FORMULAS.filter(f => f.id !== scenario.correctFormulaId)
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
@@ -124,9 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
     choices.forEach(formula => {
       const btn = document.createElement("button");
       btn.className = "mm-opt-btn";
+      btn.setAttribute("data-fid", formula.id);
       btn.innerHTML = `
         <span class="mm-opt-name">${formula.name}</span>
-        <span class="mm-opt-eq">${formula.equation}</span>
+        <div class="mm-opt-eq">${tex(formula.latex, false)}</div>
       `;
 
       btn.addEventListener("click", () => {
@@ -135,6 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       mmOptions.appendChild(btn);
     });
+
+    renderAllMath(document.getElementById("matchmaker-container"));
   }
 
   function handleMatchmakerChoice(chosenId, scenario, correctForm) {
@@ -150,14 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
       mmFeedbackText.innerHTML = scenario.reason;
     } else {
       mmFeedback.classList.add("wrong");
-      mmFeedbackHeader.innerHTML = "💡 Not quite — here is the key clue:";
-      mmFeedbackText.innerHTML = `${scenario.reason} <br><strong>Correct Choice:</strong> ${correctForm.name} (<code>${correctForm.equation}</code>)`;
+      mmFeedbackHeader.innerHTML = "💡 Key Exam Clue:";
+      mmFeedbackText.innerHTML = `${scenario.reason} <br><strong>Correct Choice:</strong> ${correctForm.name} (${tex(correctForm.latex, false)})`;
     }
 
     // Highlight correct & wrong buttons
     optionButtons.forEach(btn => {
-      const eqText = btn.querySelector(".mm-opt-eq").textContent;
-      if (eqText === correctForm.equation) {
+      const fid = btn.getAttribute("data-fid");
+      if (fid === correctForm.id) {
         btn.classList.add("correct");
       } else {
         btn.classList.add("wrong");
@@ -168,8 +209,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const firstRearrange = correctForm.algebraLifeline[0];
     mmAlgebraTip.innerHTML = `
       <strong>💡 Addie's Algebra Lifeline for this formula:</strong><br>
-      To solve for <em>${firstRearrange.find}</em>: <code>${firstRearrange.formula}</code> &mdash; ${firstRearrange.tip}
+      To solve for $${firstRearrange.find}$: <div style="display:inline-block; margin: 4px 0;">${tex(firstRearrange.formulaLatex, false)}</div> &mdash; ${firstRearrange.tip}
     `;
+
+    renderAllMath(mmFeedback);
   }
 
   mmNextBtn.addEventListener("click", () => {
@@ -210,25 +253,29 @@ document.addEventListener("DOMContentLoaded", () => {
     mathProblemPrompt.innerHTML = state.currentMathProblem.prompt;
     mathTrapText.innerHTML = state.currentMathProblem.trapAlert;
     mathFormulaName.textContent = state.currentMathProblem.formulaName;
-    mathRawFormula.textContent = state.currentMathProblem.rawFormula;
+    
+    // Render formula in big crisp KaTeX display mode
+    mathRawFormula.innerHTML = tex(state.currentMathProblem.displayFormulaLatex, true);
     mathAnswerUnit.textContent = state.currentMathProblem.unit;
 
     // Render Givens
     mathGivensGrid.innerHTML = state.currentMathProblem.givens.map(g => `
       <div class="given-chip">
         <span class="given-label">${g.label}</span>
-        <span class="given-val">${g.val}</span>
+        <span class="given-val">${tex(g.val, false)}</span>
       </div>
     `).join("");
 
     // Render step list
-    mathStepList.innerHTML = state.currentMathProblem.algebraSteps.map(s => `<li>${s}</li>`).join("");
+    mathStepList.innerHTML = state.currentMathProblem.algebraStepsLatex.map(s => `<li>${s}</li>`).join("");
 
     // Reset inputs and feedback
     mathUserAnswer.value = "";
     mathFeedback.className = "math-feedback-box hidden";
     mathFeedback.innerHTML = "";
     mathWalkthrough.classList.add("hidden");
+
+    renderAllMath(document.querySelector(".math-problem-card"));
   }
 
   mathTopicSelect.addEventListener("change", (e) => {
@@ -247,30 +294,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const expected = state.currentMathProblem.answer;
-    // Allow slight tolerance (0.1 or 2%)
+    // Allow slight tolerance (0.15 or 3%)
     const diff = Math.abs(userVal - expected);
     const isClose = diff < 0.15 || (expected !== 0 && diff / Math.abs(expected) < 0.03);
 
     mathFeedback.classList.remove("hidden");
     if (isClose) {
       mathFeedback.className = "math-feedback-box correct";
-      mathFeedback.innerHTML = `🌟 EXCELLENT WORK, ADDIE! Correct: <strong>${expected} ${state.currentMathProblem.unit}</strong>! Your algebra is solid!`;
+      mathFeedback.innerHTML = `🌟 EXCELLENT WORK, ADDIE! Correct: <strong>${expected} ${state.currentMathProblem.unit}</strong>! Your algebra is completely on point!`;
       state.mathStreak++;
       localStorage.setItem("addie_math_streak", state.mathStreak);
       updateStatsUI();
       mathWalkthrough.classList.remove("hidden");
     } else {
       mathFeedback.className = "math-feedback-box wrong";
-      mathFeedback.innerHTML = `Almost! You entered <strong>${userVal}</strong>, but the expected answer is <strong>${expected} ${state.currentMathProblem.unit}</strong>. Check the step breakdown below to see where the algebra went off track.`;
+      mathFeedback.innerHTML = `Almost! You entered <strong>${userVal}</strong>, but the expected answer is <strong>${expected} ${state.currentMathProblem.unit}</strong>. Check the step breakdown below to see where the numbers differed.`;
       state.mathStreak = 0;
       localStorage.setItem("addie_math_streak", "0");
       updateStatsUI();
       mathWalkthrough.classList.remove("hidden");
     }
+
+    renderAllMath(mathWalkthrough);
   });
 
   mathRevealStepsBtn.addEventListener("click", () => {
     mathWalkthrough.classList.toggle("hidden");
+    renderAllMath(mathWalkthrough);
   });
 
   loadMathProblem(0);
@@ -318,10 +368,12 @@ document.addEventListener("DOMContentLoaded", () => {
       conceptQuestionsList.appendChild(card);
     });
 
-    // Attach click listeners to all question options
+    // Attach click listeners to question options
     document.querySelectorAll(".q-opt").forEach(btn => {
       btn.addEventListener("click", handleConceptAnswer);
     });
+
+    renderAllMath(conceptQuestionsList);
   }
 
   function handleConceptAnswer(e) {
@@ -333,7 +385,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const explanation = document.getElementById(`exp-${qid}`);
     const card = document.getElementById(`qcard-${qid}`);
 
-    // Disable all options in this card
     const allBtns = container.querySelectorAll(".q-opt");
     allBtns.forEach(b => (b.disabled = true));
 
@@ -351,6 +402,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("selected-wrong");
       allBtns[question.correct].classList.add("selected-correct");
     }
+
+    renderAllMath(explanation);
   }
 
   filterButtons.forEach(btn => {
@@ -384,6 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
   `).join("");
+  renderAllMath(trapsGrid);
 
   // -------------------------------------------------------------
   // TAB 5: CHEAT SHEET & ALGEBRA
@@ -393,26 +447,26 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="cheat-card">
       <span class="topic-pill">${form.topic}</span>
       <h3 style="margin-top:8px;">${form.name}</h3>
-      <div class="cheat-equation">${form.equation}</div>
+      <div class="cheat-equation">${tex(form.displayLatex, true)}</div>
       <p class="cheat-plain">${form.plainEnglish}</p>
       
-      <div style="font-size:0.85rem; color:#4338ca; font-weight:600; margin-bottom:6px;">
+      <div style="font-size:0.85rem; color:#4338ca; font-weight:600; margin-bottom:10px;">
         🔍 Trigger Keywords: ${form.triggerKeywords.join(", ")}
       </div>
 
       <table class="cheat-algebra-table">
         <thead>
           <tr>
-            <th>Solving For</th>
-            <th>Formula to Plug Into</th>
+            <th style="width: 25%;">Solving For</th>
+            <th style="width: 40%;">Formula to Plug Into</th>
             <th>Quick Tip</th>
           </tr>
         </thead>
         <tbody>
           ${form.algebraLifeline.map(alg => `
             <tr>
-              <td><strong>${alg.find}</strong></td>
-              <td><code>${alg.formula}</code></td>
+              <td><strong>$${alg.find}$</strong></td>
+              <td><div class="table-math-cell">${tex(alg.formulaLatex, false)}</div></td>
               <td>${alg.tip}</td>
             </tr>
           `).join("")}
@@ -420,4 +474,10 @@ document.addEventListener("DOMContentLoaded", () => {
       </table>
     </div>
   `).join("");
+  renderAllMath(cheatGrid);
+
+  // Initial full document math render pass
+  setTimeout(() => {
+    renderAllMath(document.body);
+  }, 200);
 });

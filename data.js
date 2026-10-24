@@ -1,201 +1,202 @@
 // Data bank for Addie's Physics Test 2 Prep
 // Chapters 5, 6, 7, 8 (Newton's 3rd Law, Momentum, Energy, Rotational Motion)
 // Tailored specifically to Addie's learning style:
+// - Beautiful, clear textbook-grade KaTeX/LaTeX formatting
 // - Brute "When to use this formula" keyword triggers
-// - Plain English explanations (no confusing jargon)
-// - Step-by-step algebra lifelines (rearranged equations)
+// - Plain English explanations (zero confusing jargon)
+// - Step-by-step algebra lifelines (pre-rearranged equations)
 // - Trap warnings (especially horizontal vs. vertical g=9.8)
 
 const FORMULAS = [
   {
     id: "momentum",
     name: "Linear Momentum",
-    equation: "p = m \\times v",
-    latex: "p = mv",
+    latex: "p = m v",
+    displayLatex: "p = m v",
     topic: "Chapter 6: Momentum",
     triggerKeywords: ["momentum", "moving mass", "mass times velocity", "inertia in motion"],
-    plainEnglish: "Momentum is just how hard something is to stop. Big mass or high speed means huge momentum.",
+    plainEnglish: "Momentum is how hard something is to stop. Big mass or high speed means huge momentum.",
     variables: [
-      { sym: "p", name: "Momentum", unit: "kg·m/s" },
-      { sym: "m", name: "Mass", unit: "kg" },
-      { sym: "v", name: "Velocity (Speed)", unit: "m/s" }
+      { sym: "p", name: "Momentum", unit: "\\text{kg}\\cdot\\text{m/s}" },
+      { sym: "m", name: "Mass", unit: "\\text{kg}" },
+      { sym: "v", name: "Velocity (Speed)", unit: "\\text{m/s}" }
     ],
     algebraLifeline: [
-      { find: "p (Momentum)", formula: "p = m × v", tip: "Multiply mass by speed directly." },
-      { find: "m (Mass)", formula: "m = p / v", tip: "Divide momentum by velocity." },
-      { find: "v (Velocity)", formula: "v = p / m", tip: "Divide momentum by mass." }
+      { find: "p \\text{ (Momentum)}", formulaLatex: "p = m \\cdot v", tip: "Multiply mass by speed directly." },
+      { find: "m \\text{ (Mass)}", formulaLatex: "m = \\frac{p}{v}", tip: "Divide momentum by velocity." },
+      { find: "v \\text{ (Velocity)}", formulaLatex: "v = \\frac{p}{m}", tip: "Divide momentum by mass." }
     ],
-    example: "A 1000 kg car moves at 20 m/s. p = 1000 × 20 = 20,000 kg·m/s."
+    example: "A $1000\\text{ kg}$ car moves at $20\\text{ m/s}$. $p = (1000)(20) = 20{,}000\\text{ kg}\\cdot\\text{m/s}$."
   },
   {
     id: "impulse-momentum",
     name: "Impulse-Momentum Theorem",
-    equation: "F \\times \\Delta t = \\Delta p = m(v_f - v_i)",
-    latex: "F\\Delta t = \\Delta p",
+    latex: "F \\Delta t = \\Delta p = m(v_f - v_i)",
+    displayLatex: "F \\Delta t = \\Delta p = m(v_f - v_i)",
     topic: "Chapter 6: Momentum",
     triggerKeywords: ["cushion", "airbag", "follow-through", "impact force", "catch the ball", "contact time", "change in momentum"],
     plainEnglish: "Impulse is Force times Time. To reduce injury force (like hitting an airbag), make the impact time longer! Change in momentum stays the same.",
     variables: [
-      { sym: "F", name: "Force", unit: "N (Newtons)" },
-      { sym: "Δt", name: "Time of contact", unit: "s (seconds)" },
-      { sym: "Δp", name: "Change in momentum", unit: "kg·m/s" },
-      { sym: "m", name: "Mass", unit: "kg" },
-      { sym: "vf - vi", name: "Change in velocity (final - initial)", unit: "m/s" }
+      { sym: "F", name: "Force", unit: "\\text{N}" },
+      { sym: "\\Delta t", name: "Time of contact", unit: "\\text{s}" },
+      { sym: "\\Delta p", name: "Change in momentum", unit: "\\text{kg}\\cdot\\text{m/s}" },
+      { sym: "m", name: "Mass", unit: "\\text{kg}" },
+      { sym: "v_f - v_i", name: "Change in velocity", unit: "\\text{m/s}" }
     ],
     algebraLifeline: [
-      { find: "F (Impact Force)", formula: "F = Δp / Δt", tip: "Divide the momentum change by time. Bigger time = smaller force!" },
-      { find: "Δt (Time needed)", formula: "Δt = Δp / F", tip: "Divide momentum change by force." },
-      { find: "Δp (Change in momentum)", formula: "Δp = F × Δt", tip: "Multiply force by contact time." }
+      { find: "F \\text{ (Impact Force)}", formulaLatex: "F = \\frac{\\Delta p}{\\Delta t}", tip: "Divide momentum change by time. Bigger time = smaller force!" },
+      { find: "\\Delta t \\text{ (Time needed)}", formulaLatex: "\\Delta t = \\frac{\\Delta p}{F}", tip: "Divide momentum change by force." },
+      { find: "\\Delta p \\text{ (Momentum Change)}", formulaLatex: "\\Delta p = F \\cdot \\Delta t", tip: "Multiply force by contact time." }
     ],
-    example: "A 0.5 kg ball moving at 20 m/s stops in 0.1 s. Δp = 0.5 × (0 - 20) = -10 kg·m/s. Force = 10 / 0.1 = 100 N."
+    example: "A $0.5\\text{ kg}$ ball at $20\\text{ m/s}$ stops in $0.1\\text{ s}$. $\\Delta p = -10\\text{ kg}\\cdot\\text{m/s}$. $F = \\frac{10}{0.1} = 100\\text{ N}$."
   },
   {
     id: "inelastic-collision",
     name: "Inelastic Collision (Stick Together)",
-    equation: "(m_1 + m_2) \\times v_f = m_1 v_1 + m_2 v_2",
-    latex: "(m_1 + m_2)v_f = m_1 v_1 + m_2 v_2",
+    latex: "(m_1 + m_2) v_f = m_1 v_1 + m_2 v_2",
+    displayLatex: "(m_1 + m_2) v_f = m_1 v_1 + m_2 v_2",
     topic: "Chapter 6: Momentum",
     triggerKeywords: ["collide and stick", "couple together", "tackled and move together", "two railcars hook"],
     plainEnglish: "When two objects stick together, their combined mass moves together. Total momentum BEFORE equals total momentum AFTER.",
     variables: [
-      { sym: "m1, m2", name: "Masses of objects", unit: "kg" },
-      { sym: "v1, v2", name: "Initial speeds", unit: "m/s" },
-      { sym: "vf", name: "Final speed of stuck objects", unit: "m/s" }
+      { sym: "m_1, m_2", name: "Masses of objects", unit: "\\text{kg}" },
+      { sym: "v_1, v_2", name: "Initial speeds", unit: "\\text{m/s}" },
+      { sym: "v_f", name: "Final speed of stuck objects", unit: "\\text{m/s}" }
     ],
     algebraLifeline: [
-      { find: "vf (Final Speed)", formula: "vf = (m1·v1 + m2·v2) / (m1 + m2)", tip: "Calculate total momentum before, then divide by (m1 + m2)." }
+      { find: "v_f \\text{ (Final Speed)}", formulaLatex: "v_f = \\frac{m_1 v_1 + m_2 v_2}{m_1 + m_2}", tip: "Calculate total momentum before, then divide by combined mass." }
     ],
-    example: "A 2 kg cart at 6 m/s hits a stationary (0 m/s) 4 kg cart and sticks. Total momentum = 2(6) + 4(0) = 12. Combined mass = 2 + 4 = 6 kg. vf = 12 / 6 = 2 m/s."
+    example: "A $2\\text{ kg}$ cart at $6\\text{ m/s}$ hits a stationary $4\\text{ kg}$ cart and sticks: $v_f = \\frac{2(6) + 4(0)}{2 + 4} = \\frac{12}{6} = 2\\text{ m/s}$."
   },
   {
     id: "kinetic-energy",
     name: "Kinetic Energy",
-    equation: "KE = 0.5 \\times m \\times v^2",
-    latex: "KE = \\frac{1}{2}m v^2",
+    latex: "KE = \\frac{1}{2} m v^2",
+    displayLatex: "KE = \\frac{1}{2} m v^2",
     topic: "Chapter 7: Energy",
     triggerKeywords: ["kinetic energy", "energy of motion", "speed doubles energy quadruples", "skidding distance"],
-    plainEnglish: "Energy an object has because it is moving. SPEED IS SQUARED! If you drive twice as fast (2x), your energy is 4 times as big (2² = 4).",
+    plainEnglish: "Energy an object has because it is moving. SPEED IS SQUARED! If you drive twice as fast ($2\\times$), your energy is 4 times as big ($2^2 = 4$).",
     variables: [
-      { sym: "KE", name: "Kinetic Energy", unit: "J (Joules)" },
-      { sym: "m", name: "Mass", unit: "kg" },
-      { sym: "v", name: "Velocity (Speed)", unit: "m/s" }
+      { sym: "KE", name: "Kinetic Energy", unit: "\\text{J (Joules)}" },
+      { sym: "m", name: "Mass", unit: "\\text{kg}" },
+      { sym: "v", name: "Velocity (Speed)", unit: "\\text{m/s}" }
     ],
     algebraLifeline: [
-      { find: "KE (Kinetic Energy)", formula: "KE = 0.5 × m × (v × v)", tip: "Square speed first (v × v), then multiply by mass, then divide by 2." },
-      { find: "m (Mass)", formula: "m = (2 × KE) / (v × v)", tip: "Double the KE, then divide by speed squared." },
-      { find: "v (Velocity)", formula: "v = √( (2 × KE) / m )", tip: "Double the KE, divide by mass, then take the SQUARE ROOT on your calculator!" }
+      { find: "KE \\text{ (Kinetic Energy)}", formulaLatex: "KE = \\frac{1}{2} m v^2", tip: "Square speed first ($v^2$), multiply by mass, then divide by 2." },
+      { find: "m \\text{ (Mass)}", formulaLatex: "m = \\frac{2 \\cdot KE}{v^2}", tip: "Double the KE, then divide by speed squared." },
+      { find: "v \\text{ (Velocity)}", formulaLatex: "v = \\sqrt{\\frac{2 \\cdot KE}{m}}", tip: "Double KE, divide by mass, then take the SQUARE ROOT on your calculator!" }
     ],
-    example: "From Addie's notes: A 4 kg box moves at 15 m/s. KE = 0.5 × 4 × (15 × 15) = 2 × 225 = 450 Joules."
+    example: "From Addie's notes: A $4\\text{ kg}$ box moves at $15\\text{ m/s}$. $KE = \\frac{1}{2}(4)(15^2) = 2 \\times 225 = 450\\text{ Joules}$."
   },
   {
     id: "potential-energy",
     name: "Gravitational Potential Energy",
-    equation: "PE = m \\times g \\times h",
-    latex: "PE = mgh",
+    latex: "PE = m g h",
+    displayLatex: "PE = m g h",
     topic: "Chapter 7: Energy",
     triggerKeywords: ["potential energy", "stored energy", "height", "elevated", "lifted against gravity"],
-    plainEnglish: "Energy stored because of an object's height above the ground. Only applies VERTICALLY (going up or down).",
+    plainEnglish: "Energy stored because of an object's height above ground. Only applies VERTICALLY (going up or down).",
     variables: [
-      { sym: "PE", name: "Potential Energy", unit: "J (Joules)" },
-      { sym: "m", name: "Mass", unit: "kg" },
-      { sym: "g", name: "Acceleration due to gravity", unit: "9.8 m/s² (or ~10)" },
-      { sym: "h", name: "Height", unit: "m (meters)" }
+      { sym: "PE", name: "Potential Energy", unit: "\\text{J}" },
+      { sym: "m", name: "Mass", unit: "\\text{kg}" },
+      { sym: "g", name: "Gravity acceleration", unit: "9.8\\text{ m/s}^2" },
+      { sym: "h", name: "Height", unit: "\\text{m}" }
     ],
     algebraLifeline: [
-      { find: "PE", formula: "PE = m × g × h", tip: "Multiply mass × 9.8 × height." },
-      { find: "h (Height)", formula: "h = PE / (m × g)", tip: "Divide PE by the object's weight (m × 9.8)." }
+      { find: "PE", formulaLatex: "PE = m g h", tip: "Multiply mass $\\times$ 9.8 $\\times$ height." },
+      { find: "h \\text{ (Height)}", formulaLatex: "h = \\frac{PE}{m g}", tip: "Divide PE by the object's weight ($m g$)." }
     ],
-    example: "A 2 kg book lifted 3 meters high: PE = 2 × 9.8 × 3 = 58.8 Joules."
+    example: "A $2\\text{ kg}$ book lifted $3\\text{ m}$: $PE = (2)(9.8)(3) = 58.8\\text{ J}$."
   },
   {
     id: "work-energy",
     name: "Work & Work-Energy Theorem",
-    equation: "W = F \\times d = \\Delta KE",
-    latex: "W = Fd = \\Delta KE",
+    latex: "W = F d = \\Delta KE",
+    displayLatex: "W = F d = \\Delta KE",
     topic: "Chapter 7: Energy",
     triggerKeywords: ["work done", "force over distance", "stopping distance", "skid marks"],
-    plainEnglish: "Work = pushing a force through a distance. Work changes an object's kinetic energy. If a car goes 3x faster, it has 9x more KE, so it takes 9x more distance to stop!",
+    plainEnglish: "Work = pushing a force through a distance. Work changes kinetic energy. If a car goes $3\\times$ faster, it has $9\\times$ more KE, so it takes $9\\times$ more distance to stop!",
     variables: [
-      { sym: "W", name: "Work", unit: "J (Joules)" },
-      { sym: "F", name: "Force", unit: "N" },
-      { sym: "d", name: "Distance", unit: "m" }
+      { sym: "W", name: "Work", unit: "\\text{J}" },
+      { sym: "F", name: "Force", unit: "\\text{N}" },
+      { sym: "d", name: "Distance", unit: "\\text{m}" }
     ],
     algebraLifeline: [
-      { find: "W (Work)", formula: "W = F × d", tip: "Force times distance." },
-      { find: "d (Stopping Distance)", formula: "d = W / F  (or d = KE / F_friction)", tip: "Divide total energy by braking force." },
-      { find: "F (Braking Force)", formula: "F = KE / d", tip: "Divide energy to stop by distance." }
+      { find: "W \\text{ (Work)}", formulaLatex: "W = F \\cdot d", tip: "Force multiplied by distance." },
+      { find: "d \\text{ (Stopping Distance)}", formulaLatex: "d = \\frac{KE}{F_{\\text{friction}}}", tip: "Divide total kinetic energy by braking force." },
+      { find: "F \\text{ (Braking Force)}", formulaLatex: "F = \\frac{KE}{d}", tip: "Divide energy to stop by distance." }
     ],
-    example: "Pushing a cart with 50 N for 10 meters: W = 50 × 10 = 500 Joules."
+    example: "Pushing a cart with $50\\text{ N}$ for $10\\text{ m}$: $W = (50)(10) = 500\\text{ J}$."
   },
   {
     id: "centripetal-acceleration",
     name: "Centripetal Acceleration",
-    equation: "a_c = v^2 / r",
     latex: "a_c = \\frac{v^2}{r}",
+    displayLatex: "a_c = \\frac{v^2}{r}",
     topic: "Chapter 8: Rotational Motion",
     triggerKeywords: ["centripetal acceleration", "turning a curve", "circular path", "spinning cylinder", "outer edge acceleration"],
     plainEnglish: "Acceleration directed INWARD toward the center of a circle. Even at constant speed, turning is accelerating because direction changes!",
     variables: [
-      { sym: "ac", name: "Centripetal Acceleration", unit: "m/s²" },
-      { sym: "v", name: "Linear Speed", unit: "m/s" },
-      { sym: "r", name: "Radius of circle", unit: "m (meters)" }
+      { sym: "a_c", name: "Centripetal Acceleration", unit: "\\text{m/s}^2" },
+      { sym: "v", name: "Linear Speed", unit: "\\text{m/s}" },
+      { sym: "r", name: "Radius of circle", unit: "\\text{m}" }
     ],
     algebraLifeline: [
-      { find: "ac (Acceleration)", formula: "ac = (v × v) / r", tip: "Square speed first, then divide by radius." },
-      { find: "r (Radius)", formula: "r = (v × v) / ac", tip: "Square speed, then divide by acceleration." },
-      { find: "v (Speed needed)", formula: "v = √(ac × r)", tip: "Multiply ac by radius, then take the square root." }
+      { find: "a_c \\text{ (Acceleration)}", formulaLatex: "a_c = \\frac{v^2}{r}", tip: "Square speed first, then divide by radius." },
+      { find: "r \\text{ (Radius)}", formulaLatex: "r = \\frac{v^2}{a_c}", tip: "Square speed, then divide by acceleration." },
+      { find: "v \\text{ (Speed needed)}", formulaLatex: "v = \\sqrt{a_c \\cdot r}", tip: "Multiply $a_c$ by radius, then take the square root." }
     ],
-    example: "From Addie's notes: Space habitat with radius r = 600 m spinning at v = 40 m/s. ac = (40 × 40) / 600 = 1600 / 600 = 2.67 m/s²."
+    example: "From Addie's notes: Space habitat with radius $r = 600\\text{ m}$ spinning at $v = 40\\text{ m/s}$. $a_c = \\frac{40^2}{600} = \\frac{1600}{600} = 2.67\\text{ m/s}^2$."
   },
   {
     id: "centripetal-force",
     name: "Centripetal Force",
-    equation: "F_c = (m \\times v^2) / r = m \\times a_c",
-    latex: "F_c = \\frac{mv^2}{r}",
+    latex: "F_c = \\frac{m v^2}{r} = m a_c",
+    displayLatex: "F_c = \\frac{m v^2}{r} = m a_c",
     topic: "Chapter 8: Rotational Motion",
     triggerKeywords: ["centripetal force", "inward force", "friction to keep car on road", "tension on string in circle"],
     plainEnglish: "Any force that pulls or pushes an object INWARD to keep it moving in a circle. Friction on tires, tension on a string, or gravity on the Moon.",
     variables: [
-      { sym: "Fc", name: "Centripetal Force", unit: "N (Newtons)" },
-      { sym: "m", name: "Mass", unit: "kg" },
-      { sym: "v", name: "Velocity", unit: "m/s" },
-      { sym: "r", name: "Radius", unit: "m" }
+      { sym: "F_c", name: "Centripetal Force", unit: "\\text{N}" },
+      { sym: "m", name: "Mass", unit: "\\text{kg}" },
+      { sym: "v", name: "Velocity", unit: "\\text{m/s}" },
+      { sym: "r", name: "Radius", unit: "\\text{m}" }
     ],
     algebraLifeline: [
-      { find: "Fc (Centripetal Force)", formula: "Fc = m × (v × v) / r", tip: "Mass × speed squared, divided by radius." }
+      { find: "F_c \\text{ (Centripetal Force)}", formulaLatex: "F_c = \\frac{m v^2}{r}", tip: "Mass $\\times$ speed squared, divided by radius." }
     ],
-    example: "A 1000 kg car takes a 50 m radius turn at 10 m/s. Fc = 1000 × (100) / 50 = 2000 N inward friction."
+    example: "A $1000\\text{ kg}$ car takes a $50\\text{ m}$ radius turn at $10\\text{ m/s}$. $F_c = \\frac{(1000)(10^2)}{50} = 2000\\text{ N}$ inward friction."
   },
   {
     id: "torque",
     name: "Torque (Twisting Force)",
-    equation: "\\tau = \\text{Force} \\times \\text{Lever Arm}",
     latex: "\\tau = F \\times d_\\perp",
+    displayLatex: "\\tau = F \\times d_\\perp",
     topic: "Chapter 8: Rotational Motion",
     triggerKeywords: ["torque", "wrench", "lever arm", "see-saw balance", "opening a door", "rotation balance"],
-    plainEnglish: "Torque makes things rotate. To maximize torque, push with maximum force at the FURTHEST point from the pivot (hinge) at a 90° right angle.",
+    plainEnglish: "Torque makes things rotate. To maximize torque, push with maximum force at the FURTHEST point from the pivot (hinge) at a $90^\\circ$ right angle.",
     variables: [
-      { sym: "τ (Tau)", name: "Torque", unit: "N·m" },
-      { sym: "F", name: "Force", unit: "N" },
-      { sym: "d", name: "Lever Arm Distance", unit: "m" }
+      { sym: "\\tau", name: "Torque", unit: "\\text{N}\\cdot\\text{m}" },
+      { sym: "F", name: "Force", unit: "\\text{N}" },
+      { sym: "d_\\perp", name: "Lever Arm Distance", unit: "\\text{m}" }
     ],
     algebraLifeline: [
-      { find: "τ (Torque)", formula: "τ = F × d", tip: "Force multiplied by distance from pivot." },
-      { find: "F (Force needed)", formula: "F = τ / d", tip: "Torque divided by lever arm. Longer wrench = less force needed!" }
+      { find: "\\tau \\text{ (Torque)}", formulaLatex: "\\tau = F \\cdot d", tip: "Force multiplied by distance from pivot." },
+      { find: "F \\text{ (Force needed)}", formulaLatex: "F = \\frac{\\tau}{d}", tip: "Torque divided by lever arm. Longer wrench = less force needed!" }
     ],
-    example: "Pulling a 0.25 m wrench with 80 N: τ = 80 × 0.25 = 20 N·m."
+    example: "Pulling a $0.25\\text{ m}$ wrench with $80\\text{ N}$: $\\tau = (80)(0.25) = 20\\text{ N}\\cdot\\text{m}$."
   }
 ];
 
 const TRAPS = [
   {
     id: "trap-gravity",
-    title: "🚨 The 'g = 9.8' Trap (Addie's Test 1 Pitfall!)",
+    title: "🚨 The '$g = 9.8\\text{ m/s}^2$' Trap (Addie's Test 1 Pitfall!)",
     badge: "CRITICAL EXAM TRAP",
     color: "#ff4d4f",
-    description: "Do NOT plug in g = 9.8 m/s² unless the object is physically falling, rising vertically, or calculating weight!",
-    rule: "Horizontal motion (like a car braking, a cart rolling, or two pucks colliding) uses a = Δv / Δt or F = ma. Gravity g = 9.8 is ONLY for vertical drops and weight (W = mg).",
-    mnemonic: "Ask yourself: Is it moving up/down in the air? If NO, put g = 9.8 away!"
+    description: "Do NOT plug in $g = 9.8\\text{ m/s}^2$ unless the object is physically falling, rising vertically, or calculating weight ($W = mg$)!",
+    rule: "Horizontal motion (like a car braking, a cart rolling, or two pucks colliding) uses $a = \\frac{\\Delta v}{\\Delta t}$ or $F = ma$. Gravity $g = 9.8\\text{ m/s}^2$ is ONLY for vertical motion and weight.",
+    mnemonic: "Ask yourself: Is it moving up/down in the air? If NO, put $g = 9.8$ away!"
   },
   {
     id: "trap-third-law",
@@ -203,17 +204,17 @@ const TRAPS = [
     badge: "CONCEPTUAL TRAP",
     color: "#fa8c16",
     description: "When a massive semi-truck hits a tiny mosquito, which exerts more force?",
-    rule: "THE FORCES ARE EXACTLY EQUAL! (F_truck = -F_bug). The bug splatters because its mass is tiny, so its acceleration is huge (a = F/m). The forces are ALWAYS identical.",
+    rule: "THE FORCES ARE EXACTLY EQUAL! ($F_{\\text{truck}} = -F_{\\text{bug}}$). The bug splatters because its mass is tiny, so its acceleration is huge ($a = \\frac{F}{m}$). The interaction forces are ALWAYS identical.",
     mnemonic: "Action = -Reaction. Forces are ALWAYS twins in size, no exceptions!"
   },
   {
     id: "trap-speed-squared",
-    title: "🚨 The Speed-Squared Trap (KE and Stopping Distance)",
+    title: "🚨 The Speed-Squared Trap ($KE$ and Stopping Distance)",
     badge: "MATH & CONCEPT TRAP",
     color: "#722ed1",
-    description: "If your car goes 2x as fast, how much further does it skid to stop?",
-    rule: "It skids 4 TIMES as far, NOT 2 times! KE = ½ m v². When speed is 2x, energy is 2² = 4x. When speed is 3x, energy is 3² = 9x!",
-    mnemonic: "Speed is SQUARED in kinetic energy and stopping distance."
+    description: "If your car goes $2\\times$ as fast, how much further does it skid to stop?",
+    rule: "It skids $4\\text{ TIMES}$ as far, NOT $2\\text{ times}$! $KE = \\frac{1}{2} m v^2$. When speed is $2\\times$, energy is $2^2 = 4\\times$. When speed is $3\\times$, energy is $3^2 = 9\\times$!",
+    mnemonic: "Speed is SQUARED in kinetic energy and stopping distance ($d \\propto v^2$)."
   },
   {
     id: "trap-bouncing",
@@ -221,8 +222,8 @@ const TRAPS = [
     badge: "CONCEPTUAL TRAP",
     color: "#13c2c2",
     description: "Does stopping a ball or bouncing it back take more impulse?",
-    rule: "BOUNCING takes roughly DOUBLE the impulse! Stopping takes Δp = m(0 - v) = -mv. Bouncing back takes Δp = m(-v - v) = -2mv. A flowerpot falling on your head hurts worse if it bounces!",
-    mnemonic: "Bounce = Double the punch (double the impulse)."
+    rule: "BOUNCING takes roughly DOUBLE the impulse! Stopping takes $\\Delta p = m(0 - v) = -mv$. Bouncing back takes $\\Delta p = m(-v - v) = -2mv$. A flowerpot falling on your head hurts worse if it bounces!",
+    mnemonic: "Bounce = Double the punch (double the impulse, $\\approx 2mv$)."
   },
   {
     id: "trap-centrifugal",
@@ -230,8 +231,8 @@ const TRAPS = [
     badge: "CONCEPTUAL TRAP",
     color: "#eb2f96",
     description: "When you turn sharp in a car, are you pushed outward by an outward force?",
-    rule: "NO! There is NO outward force. Your body has INERTIA and just wants to continue traveling straight. The only real force is the INWARD centripetal force from the car door/seatbelt pushing you into the curve.",
-    mnemonic: "Centripetal = Center-seeking (real). Centrifugal = Just inertia feeling thrown."
+    rule: "NO! There is NO outward force. Your body has INERTIA and just wants to continue traveling straight. The only real force is the INWARD centripetal force ($F_c = \\frac{m v^2}{r}$) from the door/seatbelt pushing you into the curve.",
+    mnemonic: "Centripetal = Center-seeking (real inward pull). Centrifugal = Just inertia feeling thrown."
   }
 ];
 
@@ -250,7 +251,7 @@ const CONCEPT_QUESTIONS = [
       "The muscular effort of the player's arm"
     ],
     correct: 1,
-    plainEnglish: "Newton's 3rd Law is a simple mirror sentence: If A pushes B, then B pushes A. Action: Ball hits glove. Reaction: Glove pushes ball.",
+    plainEnglish: "Newton's 3rd Law is a simple mirror sentence: If object A pushes object B, then object B pushes object A. Action: Ball hits glove. Reaction: Glove pushes ball.",
     trapTip: "Don't bring in third objects like shoes or arm muscles. Just swap the two interacting objects!"
   },
   {
@@ -265,22 +266,22 @@ const CONCEPT_QUESTIONS = [
       "Zero because the bug gets squashed"
     ],
     correct: 2,
-    plainEnglish: "Newton's 3rd law NEVER allows one force to be larger than the other. Truck on bug = bug on truck. The bug splatters because its mass is tiny, so its acceleration is catastrophic.",
+    plainEnglish: "Newton's 3rd law NEVER allows one force to be larger than the other. Truck on bug = bug on truck ($F_{\\text{truck}} = -F_{\\text{bug}}$). The bug splatters because its mass is tiny, so its acceleration is huge ($a = \\frac{F}{m}$).",
     trapTip: "Common intuition says 'truck hits harder.' Physics says: Forces are identical; damages differ because masses differ!"
   },
   {
     id: "c5-3",
     chapter: 5,
     chapterTitle: "Chapter 5: Newton's Third Law",
-    question: "A person is attracted toward the center of the Earth by a 500 N gravitational force. The force with which Earth is attracted toward the person is:",
+    question: "A person is attracted toward the center of the Earth by a $500\\text{ N}$ gravitational force. The force with which Earth is attracted toward the person is:",
     options: [
       "Very very small, practically zero",
-      "500 N",
+      "Exactly $500\\text{ N}$",
       "Dependent on the person's volume",
-      "Equal to Earth's mass multiplied by 500"
+      "Equal to Earth's mass multiplied by $500$"
     ],
     correct: 1,
-    plainEnglish: "If Earth pulls you down with 500 N, YOU pull the entire planet Earth up with exactly 500 N! Earth doesn't move noticeably because its mass is 6 × 10²⁴ kg.",
+    plainEnglish: "If Earth pulls you down with $500\\text{ N}$, YOU pull the entire planet Earth up with exactly $500\\text{ N}$! Earth doesn't move noticeably because its mass is $6 \\times 10^{24}\\text{ kg}$.",
     trapTip: "Remember the mirror rule: Earth pulls Person = Person pulls Earth with the identical force."
   },
   {
@@ -302,16 +303,16 @@ const CONCEPT_QUESTIONS = [
     id: "c5-5",
     chapter: 5,
     chapterTitle: "Chapter 5: Newton's Third Law",
-    question: "Two people pull on opposite ends of a rope in a tug-of-war. Each pulls with 400 N of force. What is the tension in the rope?",
+    question: "Two people pull on opposite ends of a rope in a tug-of-war. Each pulls with $400\\text{ N}$ of force. What is the tension in the rope?",
     options: [
-      "0 N (they cancel out)",
-      "400 N",
-      "800 N",
-      "200 N"
+      "$0\\text{ N}$ (they cancel out)",
+      "$400\\text{ N}$",
+      "$800\\text{ N}$",
+      "$200\\text{ N}$"
     ],
     correct: 1,
-    plainEnglish: "Tension throughout a single rope pulled by 400 N at each end is 400 N. If you tied one end to a solid tree and pulled with 400 N, the tree pulls back with 400 N and the rope feels 400 N.",
-    trapTip: "Do NOT add 400 + 400 = 800 N! A rope holding 400 N must have 400 N pulling both ways, otherwise it would accelerate away."
+    plainEnglish: "Tension throughout a single rope pulled by $400\\text{ N}$ at each end is $400\\text{ N}$. If you tied one end to a solid tree and pulled with $400\\text{ N}$, the tree pulls back with $400\\text{ N}$ and the rope feels $400\\text{ N}$.",
+    trapTip: "Do NOT add $400 + 400 = 800\\text{ N}$! A rope holding $400\\text{ N}$ must have $400\\text{ N}$ pulling both ways to remain in equilibrium."
   },
 
   // Chapter 6: Momentum
@@ -327,8 +328,8 @@ const CONCEPT_QUESTIONS = [
       "It depends on the truck's weight"
     ],
     correct: 1,
-    plainEnglish: "Momentum = mass × velocity. If velocity is ZERO, momentum is ZERO! No matter how heavy the parked truck is, p = m × 0 = 0.",
-    trapTip: "Inertia is just mass (the truck has huge inertia). But MOMENTUM requires speed (inertia in motion)."
+    plainEnglish: "Momentum formula is $p = m v$. If velocity is ZERO, momentum is ZERO! No matter how heavy the parked truck is, $p = m \\times 0 = 0$.",
+    trapTip: "Inertia is just mass (the truck has huge inertia). But MOMENTUM requires motion ($p = mv$)."
   },
   {
     id: "c6-2",
@@ -337,12 +338,12 @@ const CONCEPT_QUESTIONS = [
     question: "Why does an airbag in a car reduce the severity of injuries during a crash?",
     options: [
       "It reduces the total change in momentum required to stop you",
-      "It lengthens the time of impact, which reduces the impact force",
+      "It lengthens the time of impact ($\\Delta t$), which reduces the impact force ($F$)",
       "It absorbs the gravity acting on your body",
       "It increases the impulse delivered to your head"
     ],
     correct: 1,
-    plainEnglish: "Your momentum change (Δp) is fixed (you must come to a stop). Since F × Δt = Δp, increasing the time (Δt) by cushioning makes the impact force (F) much smaller!",
+    plainEnglish: "Your momentum change ($\\Delta p$) is fixed (you must come to a stop). Since $F \\Delta t = \\Delta p$, increasing the time ($\\Delta t$) by cushioning makes the impact force ($F = \\frac{\\Delta p}{\\Delta t}$) much smaller!",
     trapTip: "The airbag does NOT reduce the impulse or change in momentum—it spreads that impulse over a longer time."
   },
   {
@@ -357,8 +358,8 @@ const CONCEPT_QUESTIONS = [
       "The rifle does not move at all"
     ],
     correct: 1,
-    plainEnglish: "Momentum is conserved: (mass × speed) of rifle = (mass × speed) of bullet. Since the rifle is very heavy, its speed is very small.",
-    trapTip: "Both experience the SAME magnitude of momentum, but because m_rifle is huge, v_rifle is small."
+    plainEnglish: "Momentum is conserved: $m_{\\text{rifle}} v_{\\text{rifle}} = m_{\\text{bullet}} v_{\\text{bullet}}$. Since the rifle is very heavy, its speed $v_{\\text{rifle}} = \\frac{m_{\\text{bullet}} v_{\\text{bullet}}}{m_{\\text{rifle}}}$ is small.",
+    trapTip: "Both experience the SAME magnitude of momentum, but because $m_{\\text{rifle}}$ is huge, $v_{\\text{rifle}}$ is small."
   },
   {
     id: "c6-4",
@@ -372,22 +373,22 @@ const CONCEPT_QUESTIONS = [
       "Neither delivers impulse because momentum is conserved"
     ],
     correct: 1,
-    plainEnglish: "Bouncing requires stopping AND reversing direction! Stopping takes Δp = mv. Bouncing takes Δp = 2mv. Bouncing delivers roughly twice the impulse to the wall.",
+    plainEnglish: "Bouncing requires stopping AND reversing direction! Stopping takes $\\Delta p = mv$. Bouncing back takes $\\Delta p = 2mv$. Bouncing delivers roughly twice the impulse to the wall.",
     trapTip: "Bouncing is always a bigger impulse than merely stopping."
   },
   {
     id: "c6-5",
     chapter: 6,
     chapterTitle: "Chapter 6: Momentum & Impulse",
-    question: "A 5 kg freight car moving at 4 m/s collides with an identical stationary 5 kg freight car, and they couple together. What is their combined speed after the collision?",
+    question: "A $5\\text{ kg}$ freight car moving at $4\\text{ m/s}$ collides with an identical stationary $5\\text{ kg}$ freight car, and they couple together. What is their combined speed after the collision?",
     options: [
-      "4 m/s",
-      "2 m/s",
-      "1 m/s",
-      "0 m/s"
+      "$4\\text{ m/s}$",
+      "$2\\text{ m/s}$",
+      "$1\\text{ m/s}$",
+      "$0\\text{ m/s}$"
     ],
     correct: 1,
-    plainEnglish: "Initial momentum = 5 kg × 4 m/s = 20 kg·m/s. After sticking, total mass = 5 + 5 = 10 kg. Speed = 20 / 10 = 2 m/s. (Mass doubled, so speed halved!)",
+    plainEnglish: "Initial momentum = $(5\\text{ kg})(4\\text{ m/s}) = 20\\text{ kg}\\cdot\\text{m/s}$. After sticking, total mass = $5 + 5 = 10\\text{ kg}$. Speed $v_f = \\frac{20}{10} = 2\\text{ m/s}$. (Mass doubled, so speed halved!)",
     trapTip: "When identical masses stick to a stationary one, the speed is simply cut in half."
   },
 
@@ -396,37 +397,37 @@ const CONCEPT_QUESTIONS = [
     id: "c7-1",
     chapter: 7,
     chapterTitle: "Chapter 7: Energy & Work",
-    question: "If a car's speed increases from 30 km/h to 60 km/h (speed doubles), what happens to its kinetic energy?",
+    question: "If a car's speed increases from $30\\text{ km/h}$ to $60\\text{ km/h}$ (speed doubles), what happens to its kinetic energy?",
     options: [
-      "It doubles (2x)",
-      "It triples (3x)",
-      "It quadruples (4x)",
+      "It doubles ($2\\times$)",
+      "It triples ($3\\times$)",
+      "It quadruples ($4\\times$)",
       "It stays the same"
     ],
     correct: 2,
-    plainEnglish: "Kinetic energy formula is KE = ½ m v². Because velocity is SQUARED, doubling speed makes energy 2² = 4 times as great!",
-    trapTip: "Always square the speed change factor! Double speed → 4x KE. Triple speed → 9x KE."
+    plainEnglish: "Kinetic energy formula is $KE = \\frac{1}{2} m v^2$. Because velocity is SQUARED, doubling speed makes energy $2^2 = 4$ times as great!",
+    trapTip: "Always square the speed change factor! Double speed $\\to 4\\times KE$. Triple speed $\\to 9\\times KE$."
   },
   {
     id: "c7-2",
     chapter: 7,
     chapterTitle: "Chapter 7: Energy & Work",
-    question: "A car traveling at 50 km/h skids 15 meters to a stop. If the same car is traveling at 100 km/h (twice as fast), how far will it skid with locked brakes?",
+    question: "A car traveling at $50\\text{ km/h}$ skids $15\\text{ m}$ to a stop. If the same car travels at $100\\text{ km/h}$ (twice as fast), how far will it skid with locked brakes?",
     options: [
-      "30 meters",
-      "45 meters",
-      "60 meters",
-      "15 meters"
+      "$30\\text{ meters}$",
+      "$45\\text{ meters}$",
+      "$60\\text{ meters}$",
+      "$15\\text{ meters}$"
     ],
     correct: 2,
-    plainEnglish: "Twice the speed means 4 times the kinetic energy (2² = 4). Braking work is Force × distance. Since braking force is constant, stopping distance must be 4 times longer: 15 m × 4 = 60 meters!",
-    trapTip: "Stopping distance is proportional to speed SQUARED, not speed!"
+    plainEnglish: "Twice the speed means $4\\times$ the kinetic energy ($2^2 = 4$). Braking work is $W = F \\cdot d$. Since braking friction $F$ is constant, stopping distance must be 4 times longer: $15\\text{ m} \\times 4 = 60\\text{ meters}$!",
+    trapTip: "Stopping distance is proportional to speed SQUARED ($d \\propto v^2$), not linear speed!"
   },
   {
     id: "c7-3",
     chapter: 7,
     chapterTitle: "Chapter 7: Energy & Work",
-    question: "A 100 N box is pushed 5 meters across a frictionless floor at constant speed. Then it is lifted 5 meters vertically. In which action is work done against gravity?",
+    question: "A $100\\text{ N}$ box is pushed $5\\text{ m}$ across a frictionless floor at constant speed. Then it is lifted $5\\text{ m}$ vertically. In which action is work done against gravity?",
     options: [
       "Only when pushed horizontally",
       "Only when lifted vertically",
@@ -434,14 +435,14 @@ const CONCEPT_QUESTIONS = [
       "Neither, because energy is conserved"
     ],
     correct: 1,
-    plainEnglish: "Gravity acts straight DOWN. To do work against gravity, movement must be VERTICAL. Pushing horizontally on a level floor does ZERO work against gravity.",
-    trapTip: "Work = Force × distance in the direction of the force. Horizontal motion is perpendicular to gravity, so gravity does no work."
+    plainEnglish: "Gravity acts straight DOWN. To do work against gravity, movement must be VERTICAL ($W = mgh$). Pushing horizontally on a level floor does ZERO work against gravity.",
+    trapTip: "Work = Force $\\times$ distance in the direction of the force. Horizontal motion is perpendicular to gravity ($90^\\circ$), so gravity does no work."
   },
   {
     id: "c7-4",
     chapter: 7,
     chapterTitle: "Chapter 7: Energy & Work",
-    question: "A roller coaster car starts from rest at the top of a 20-meter high hill. Ignoring friction, what happens to its potential energy as it reaches the bottom?",
+    question: "A roller coaster car starts from rest at the top of a $20\\text{-meter}$ high hill. Ignoring friction, what happens to its potential energy as it reaches the bottom?",
     options: [
       "It is completely lost and destroyed",
       "It turns entirely into kinetic energy",
@@ -449,23 +450,23 @@ const CONCEPT_QUESTIONS = [
       "It stays constant as potential energy"
     ],
     correct: 1,
-    plainEnglish: "Conservation of energy: Energy cannot be created or destroyed. The gravitational potential energy at the top (mgh) transforms completely into kinetic energy (½ mv²) at the bottom.",
-    trapTip: "Total Mechanical Energy (PE + KE) remains constant if there is no friction."
+    plainEnglish: "Conservation of energy: Energy cannot be created or destroyed. The gravitational potential energy at the top ($mgh$) transforms completely into kinetic energy ($\\frac{1}{2} mv^2$) at the bottom.",
+    trapTip: "Total Mechanical Energy ($PE + KE$) remains constant if there is no friction."
   },
   {
     id: "c7-5",
     chapter: 7,
     chapterTitle: "Chapter 7: Energy & Work",
-    question: "Which requires more work: lifting a 50 kg sack vertically 2 meters, or lifting a 25 kg sack vertically 4 meters?",
+    question: "Which requires more work: lifting a $50\\text{ kg}$ sack vertically $2\\text{ m}$, or lifting a $25\\text{ kg}$ sack vertically $4\\text{ m}$?",
     options: [
-      "Lifting the 50 kg sack",
-      "Lifting the 25 kg sack",
+      "Lifting the $50\\text{ kg}$ sack",
+      "Lifting the $25\\text{ kg}$ sack",
       "Both require the exact same amount of work",
       "Neither requires work if done slowly"
     ],
     correct: 2,
-    plainEnglish: "Work = Force × distance = mgh. For sack 1: 50 × g × 2 = 100g. For sack 2: 25 × g × 4 = 100g. Both require identical work (approx. 980 Joules)!",
-    trapTip: "Half the weight over twice the height equals the exact same product: 50 × 2 = 25 × 4 = 100."
+    plainEnglish: "Work $= F \\cdot d = mgh$. Sack 1: $(50)(g)(2) = 100g$. Sack 2: $(25)(g)(4) = 100g$. Both require identical work (approx. $980\\text{ Joules}$)!",
+    trapTip: "Half the weight over twice the height equals the exact same product: $50 \\times 2 = 25 \\times 4 = 100$."
   },
 
   // Chapter 8: Rotational Motion
@@ -481,8 +482,8 @@ const CONCEPT_QUESTIONS = [
       "Neither has linear speed because it is rotating"
     ],
     correct: 1,
-    plainEnglish: "Both horses complete one full circle in the same time (same rotational speed RPM). But the outside horse travels around a much bigger circle, so its linear speed (v = r × ω) is much greater!",
-    trapTip: "Rotational speed (RPM) is the SAME for both. Linear speed (m/s) is GREATER on the outer edge."
+    plainEnglish: "Both horses complete one full circle in the same time (same rotational speed $\\omega$ in RPM). But the outside horse travels around a much bigger circumference, so its linear speed ($v = r \\omega$) is much greater!",
+    trapTip: "Rotational speed (RPM) is the SAME for both. Linear speed ($v = r\\omega$) is GREATER on the outer edge."
   },
   {
     id: "c8-2",
@@ -492,11 +493,11 @@ const CONCEPT_QUESTIONS = [
     options: [
       "Use a shorter wrench and pull near the nut",
       "Use a longer wrench and pull at the very end of the handle",
-      "Pull at a 30 degree angle to the wrench",
+      "Pull at a $30^\\circ$ angle to the wrench",
       "Apply force as close to the axis as possible"
     ],
     correct: 1,
-    plainEnglish: "Torque = Force × lever arm. A longer wrench gives you a bigger lever arm (distance from nut). With a longer handle, you get way more torque from the same muscle force!",
+    plainEnglish: "Torque $= F \\times d_\\perp$. A longer wrench gives you a bigger lever arm ($d$). With a longer handle, you get way more torque from the same muscle force!",
     trapTip: "Lever arm is distance from the pivot. Always maximize lever arm to maximize torque."
   },
   {
@@ -511,7 +512,7 @@ const CONCEPT_QUESTIONS = [
       "Her angular momentum doubles"
     ],
     correct: 1,
-    plainEnglish: "Angular momentum (L = I × ω) is conserved! Pulling mass closer to the axis reduces her rotational inertia (I). To keep L constant, her spin rate (ω) must speed up dramatically!",
+    plainEnglish: "Angular momentum ($L = I \\omega$) is conserved! Pulling mass closer to the axis reduces her rotational inertia ($I$). To keep $L$ constant, her spin rate ($\\omega$) must speed up dramatically!",
     trapTip: "Angular momentum stays CONSTANT. Rotational inertia goes DOWN, so rotational speed goes UP."
   },
   {
@@ -526,7 +527,7 @@ const CONCEPT_QUESTIONS = [
       "Straight downward into the pavement"
     ],
     correct: 2,
-    plainEnglish: "Centripetal means 'center-seeking.' To turn in a circle, the force MUST point INWARD toward the center of the circle (provided by tire friction).",
+    plainEnglish: "Centripetal means 'center-seeking.' To turn in a circle, the force MUST point INWARD toward the center of the curve ($F_c = \\frac{m v^2}{r}$), provided by tire friction.",
     trapTip: "Even though you FEEL thrown outward, the actual physical force is INWARD friction."
   },
   {
@@ -536,12 +537,12 @@ const CONCEPT_QUESTIONS = [
     question: "Why does a tightrope walker carry a long, heavy pole?",
     options: [
       "To increase her total weight so she presses harder into the wire",
-      "To increase her rotational inertia, making it much harder to tip over quickly",
+      "To increase her rotational inertia ($I$), making it much harder to tip over quickly",
       "To create an upward lift force like airplane wings",
       "To lower her center of gravity below the wire entirely"
     ],
     correct: 1,
-    plainEnglish: "The long pole puts mass far out from her body, greatly increasing her rotational inertia. This makes it resist tipping over, giving her plenty of time to re-balance!",
+    plainEnglish: "The long pole puts mass far out from her body, greatly increasing her rotational inertia ($I = m r^2$). This makes it resist tipping over, giving her plenty of time to re-balance!",
     trapTip: "Rotational inertia resists changes in rotation. Mass far from the pivot = huge resistance to toppling."
   }
 ];
@@ -562,23 +563,23 @@ const MATH_TEMPLATES = [
       const answer = 0.5 * m * vSquared;
       
       return {
-        prompt: `A box with a mass of <strong>${m} kg</strong> is sliding across a smooth floor at a constant speed of <strong>${v} m/s</strong>. What is its kinetic energy?`,
+        prompt: `A box with a mass of <strong>$m = ${m}\\text{ kg}$</strong> is sliding across a smooth floor at a constant speed of <strong>$v = ${v}\\text{ m/s}$</strong>. What is its kinetic energy?`,
         givens: [
-          { label: "Mass (m)", val: `${m} kg` },
-          { label: "Speed (v)", val: `${v} m/s` },
-          { label: "Goal", val: "Kinetic Energy (KE) in Joules" }
+          { label: "Mass (m)", val: `$${m}\\text{ kg}$` },
+          { label: "Speed (v)", val: `$${v}\\text{ m/s}$` },
+          { label: "Goal", val: "$KE \\text{ in Joules}$" }
         ],
         formulaName: "Kinetic Energy Formula",
-        rawFormula: "KE = ½ · m · v²",
-        algebraSteps: [
-          `Step 1: Write down the formula: KE = ½ × m × v²`,
-          `Step 2: Square the speed first: v² = ${v} × ${v} = ${vSquared}`,
-          `Step 3: Multiply mass by v²: ${m} × ${vSquared} = ${m * vSquared}`,
-          `Step 4: Multiply by ½ (divide by 2): ${m * vSquared} / 2 = <strong>${answer} Joules</strong>`
+        displayFormulaLatex: "KE = \\frac{1}{2} m v^2",
+        algebraStepsLatex: [
+          `Write down the standard equation: $$KE = \\frac{1}{2} m v^2$$`,
+          `Square the speed first: $$v^2 = (${v}\\text{ m/s})^2 = ${vSquared}\\text{ m}^2/\\text{s}^2$$`,
+          `Multiply mass by speed squared: $$m \\cdot v^2 = (${m}\\text{ kg})(${vSquared}) = ${m * vSquared}$$`,
+          `Multiply by $\\frac{1}{2}$ (or divide by 2): $$KE = \\frac{${m * vSquared}}{2} = \\mathbf{${answer}\\text{ Joules}}$$`
         ],
         answer: answer,
         unit: "J",
-        trapAlert: "⚠️ Remember to SQUARE the speed (${v} × ${v} = ${vSquared}) BEFORE multiplying! Do not do ½ × m × v and then square."
+        trapAlert: `⚠️ Remember to SQUARE the speed first: $${v}^2 = ${vSquared}$ BEFORE multiplying! Do not do $\\frac{1}{2} m v$ and then square.`
       };
     }
   },
@@ -588,7 +589,6 @@ const MATH_TEMPLATES = [
     topic: "Energy / Algebra Practice",
     badge: "Algebra Lifeline",
     generate: () => {
-      // Pick clean integers
       const vList = [4, 5, 6, 8, 10, 12];
       const mList = [2, 4, 8];
       const v = vList[Math.floor(Math.random() * vList.length)];
@@ -596,23 +596,23 @@ const MATH_TEMPLATES = [
       const ke = 0.5 * m * (v * v);
       
       return {
-        prompt: `An object of mass <strong>${m} kg</strong> has a kinetic energy of <strong>${ke} Joules</strong>. What is its speed (velocity)?`,
+        prompt: `An object of mass <strong>$m = ${m}\\text{ kg}$</strong> has a kinetic energy of <strong>$KE = ${ke}\\text{ Joules}$</strong>. What is its speed (velocity)?`,
         givens: [
-          { label: "Mass (m)", val: `${m} kg` },
-          { label: "Kinetic Energy (KE)", val: `${ke} J` },
-          { label: "Goal", val: "Speed (v) in m/s" }
+          { label: "Mass (m)", val: `$${m}\\text{ kg}$` },
+          { label: "Kinetic Energy (KE)", val: `$${ke}\\text{ J}$` },
+          { label: "Goal", val: "$v \\text{ in m/s}$" }
         ],
-        formulaName: "Rearranged KE Formula",
-        rawFormula: "v = √( 2 · KE / m )",
-        algebraSteps: [
-          `Step 1: Start with KE = ½ m v²`,
-          `Step 2: Rearrange for v² by multiplying by 2 and dividing by m: v² = (2 × KE) / m`,
-          `Step 3: Plug in numbers: v² = (2 × ${ke}) / ${m} = ${2 * ke} / ${m} = ${v * v}`,
-          `Step 4: Take the square root: v = √(${v * v}) = <strong>${v} m/s</strong>`
+        formulaName: "Rearranged KE Formula (Solved for v)",
+        displayFormulaLatex: "v = \\sqrt{\\frac{2 \\cdot KE}{m}}",
+        algebraStepsLatex: [
+          `Start with the base formula: $$KE = \\frac{1}{2} m v^2$$`,
+          `Multiply both sides by 2 and divide by $m$ to isolate $v^2$: $$v^2 = \\frac{2 \\cdot KE}{m}$$`,
+          `Plug in the known values: $$v^2 = \\frac{2 \\times ${ke}}{${m}} = \\frac{${2 * ke}}{${m}} = ${v * v}$$`,
+          `Take the square root of both sides: $$v = \\sqrt{${v * v}} = \\mathbf{${v}\\text{ m/s}}$$`
         ],
         answer: v,
         unit: "m/s",
-        trapAlert: "⚠️ Addie's Algebra Lifeline: Don't forget the final square root! If your calculator shows ${v*v}, hit the √ button to get ${v}."
+        trapAlert: `⚠️ Addie's Algebra Lifeline: Don't forget the final square root! If your calculator shows $${v * v}$, hit the $\\sqrt{\\phantom{x}}$ button to get $${v}$.`
       };
     }
   },
@@ -622,13 +622,12 @@ const MATH_TEMPLATES = [
     topic: "Rotational Motion (Addie's Notes Page 1!)",
     badge: "Direct Exam Problem",
     generate: () => {
-      // Like spaceship problem in notes: v=40, r=600 -> 1600/600 = 2.67
       const scenarios = [
-        { v: 40, r: 600, desc: "A rotating cylindrical spaceship with radius r = 600 m spinning at tangential speed v = 40 m/s" },
-        { v: 30, r: 450, desc: "A circular space station with radius r = 450 m rotating at speed v = 30 m/s" },
-        { v: 20, r: 100, desc: "A racecar driving along a curved track of radius r = 100 m at speed v = 20 m/s" },
-        { v: 10, r: 25, desc: "A cyclist cornering a round track with radius r = 25 m at speed v = 10 m/s" },
-        { v: 15, r: 75, desc: "A theme park centrifuge ride with radius r = 75 m spinning riders at v = 15 m/s" }
+        { v: 40, r: 600, desc: "A rotating cylindrical spaceship with radius $r = 600\\text{ m}$ spinning at tangential speed $v = 40\\text{ m/s}$" },
+        { v: 30, r: 450, desc: "A circular space station with radius $r = 450\\text{ m}$ rotating at speed $v = 30\\text{ m/s}$" },
+        { v: 20, r: 100, desc: "A racecar driving along a curved track of radius $r = 100\\text{ m}$ at speed $v = 20\\text{ m/s}$" },
+        { v: 10, r: 25, desc: "A cyclist cornering a round track with radius $r = 25\\text{ m}$ at speed $v = 10\\text{ m/s}$" },
+        { v: 15, r: 75, desc: "A theme park centrifuge ride with radius $r = 75\\text{ m}$ spinning riders at $v = 15\\text{ m/s}$" }
       ];
       const sc = scenarios[Math.floor(Math.random() * scenarios.length)];
       const v2 = sc.v * sc.v;
@@ -638,26 +637,26 @@ const MATH_TEMPLATES = [
       return {
         prompt: `${sc.desc}. What is the centripetal acceleration on the outer edge?`,
         givens: [
-          { label: "Speed (v)", val: `${sc.v} m/s` },
-          { label: "Radius (r)", val: `${sc.r} m` },
-          { label: "Goal", val: "Centripetal Acceleration (ac) in m/s²" }
+          { label: "Speed (v)", val: `$${sc.v}\\text{ m/s}$` },
+          { label: "Radius (r)", val: `$${sc.r}\\text{ m}$` },
+          { label: "Goal", val: "$a_c \\text{ in m/s}^2$" }
         ],
         formulaName: "Centripetal Acceleration Formula",
-        rawFormula: "a_c = v² / r",
-        algebraSteps: [
-          `Step 1: Identify formula: a_c = v² / r`,
-          `Step 2: Square the speed: v² = ${sc.v} × ${sc.v} = ${v2}`,
-          `Step 3: Divide by radius: a_c = ${v2} / ${sc.r} = <strong>${answer} m/s²</strong>`
+        displayFormulaLatex: "a_c = \\frac{v^2}{r}",
+        algebraStepsLatex: [
+          `Identify the inward acceleration formula: $$a_c = \\frac{v^2}{r}$$`,
+          `Square the speed: $$v^2 = (${sc.v})^2 = ${v2}$$`,
+          `Divide by the radius: $$a_c = \\frac{${v2}}{${sc.r}} = \\mathbf{${answer}\\text{ m/s}^2}$$`
         ],
         answer: answer,
         unit: "m/s²",
-        trapAlert: "⚠️ Do NOT plug in g = 9.8! This acceleration is caused purely by rotation (turning in a circle), so you must calculate v² / r."
+        trapAlert: `⚠️ Do NOT plug in $g = 9.8\\text{ m/s}^2$! This acceleration is caused purely by rotation (turning in a circle), so you must calculate $\\frac{v^2}{r}$.`
       };
     }
   },
   {
     id: "prob-momentum-change",
-    title: "Change in Momentum (Δp = m Δv)",
+    title: "Change in Momentum (\\Delta p = m \\Delta v)",
     topic: "Momentum (Addie's Notes Page 1!)",
     badge: "Direct Exam Problem",
     generate: () => {
@@ -668,28 +667,28 @@ const MATH_TEMPLATES = [
       const v1 = v1s[Math.floor(Math.random() * v1s.length)];
       const v2 = v2s[Math.floor(Math.random() * v2s.length)];
       const deltaV = v2 - v1;
-      const rawAns = m * deltaV; // will be negative if slowing
+      const rawAns = m * deltaV;
       const absAns = Math.abs(rawAns);
 
       return {
-        prompt: `A <strong>${m} kg</strong> car traveling horizontally at <strong>${v1} m/s</strong> slows down to <strong>${v2} m/s</strong>. What is the magnitude of the car's change in momentum?`,
+        prompt: `A <strong>$m = ${m}\\text{ kg}$</strong> car traveling horizontally at <strong>$v_1 = ${v1}\\text{ m/s}$</strong> slows down to <strong>$v_2 = ${v2}\\text{ m/s}$</strong>. What is the magnitude of the car's change in momentum?`,
         givens: [
-          { label: "Mass (m)", val: `${m} kg` },
-          { label: "Initial Velocity (v1)", val: `${v1} m/s` },
-          { label: "Final Velocity (v2)", val: `${v2} m/s` },
-          { label: "Goal", val: "Change in Momentum (Δp) in kg·m/s" }
+          { label: "Mass (m)", val: `$${m}\\text{ kg}$` },
+          { label: "Initial Velocity (v1)", val: `$${v1}\\text{ m/s}$` },
+          { label: "Final Velocity (v2)", val: `$${v2}\\text{ m/s}$` },
+          { label: "Goal", val: "$|\\Delta p| \\text{ in kg}\\cdot\\text{m/s}$" }
         ],
         formulaName: "Change in Momentum Formula",
-        rawFormula: "Δp = m · (v₂ - v₁) = m · v₂ - m · v₁",
-        algebraSteps: [
-          `Step 1: Formula from notes: Δp = m·v₂ - m·v₁ (or m × (v₂ - v₁))`,
-          `Step 2: Calculate change in velocity: Δv = ${v2} - ${v1} = ${deltaV} m/s`,
-          `Step 3: Multiply by mass: Δp = ${m} × (${deltaV}) = ${rawAns} kg·m/s`,
-          `Step 4: Magnitude (size without minus sign) = <strong>${absAns} kg·m/s</strong>`
+        displayFormulaLatex: "\\Delta p = m(v_2 - v_1) = m v_2 - m v_1",
+        algebraStepsLatex: [
+          `Formula from notes: $$\\Delta p = m(v_2 - v_1)$$`,
+          `Calculate velocity change: $$\\Delta v = v_2 - v_1 = ${v2} - ${v1} = ${deltaV}\\text{ m/s}$$`,
+          `Multiply by mass: $$\\Delta p = (${m}\\text{ kg})(${deltaV}\\text{ m/s}) = ${rawAns}\\text{ kg}\\cdot\\text{m/s}$$`,
+          `Magnitude (size without negative sign): $$|\\Delta p| = \\mathbf{${absAns}\\text{ kg}\\cdot\\text{m/s}}$$`
         ],
         answer: absAns,
         unit: "kg·m/s",
-        trapAlert: "⚠️ THE #1 TEST 1 TRAP: This is a car moving HORIZONTALLY. Do NOT use g = 9.8! g is only for things falling up/down in the air."
+        trapAlert: `⚠️ THE #1 TEST 1 TRAP: This is a car moving HORIZONTALLY. Do NOT use $g = 9.8\\text{ m/s}^2$! Gravity is only for vertical falling.`
       };
     }
   },
@@ -711,22 +710,22 @@ const MATH_TEMPLATES = [
       const answer = Math.round(rawAns * 100) / 100;
 
       return {
-        prompt: `A <strong>${m1} kg</strong> toy cart moving at <strong>${v1} m/s</strong> collides with a stationary (resting, 0 m/s) <strong>${m2} kg</strong> cart. If they latch and stick together, what is their final speed?`,
+        prompt: `A <strong>$m_1 = ${m1}\\text{ kg}$</strong> toy cart moving at <strong>$v_1 = ${v1}\\text{ m/s}$</strong> collides with a stationary (at rest, $v_2 = 0$) <strong>$m_2 = ${m2}\\text{ kg}$</strong> cart. If they latch and stick together, what is their final speed?`,
         givens: [
-          { label: "Cart 1 (m1, v1)", val: `${m1} kg, ${v1} m/s` },
-          { label: "Cart 2 (m2, v2)", val: `${m2} kg, 0 m/s` },
-          { label: "Goal", val: "Final combined speed (vf) in m/s" }
+          { label: "Cart 1 (m1, v1)", val: `$${m1}\\text{ kg}, ${v1}\\text{ m/s}$` },
+          { label: "Cart 2 (m2, v2)", val: `$${m2}\\text{ kg}, 0\\text{ m/s}$` },
+          { label: "Goal", val: "$v_f \\text{ in m/s}$" }
         ],
         formulaName: "Conservation of Momentum (Inelastic)",
-        rawFormula: "vf = (m₁ · v₁) / (m₁ + m₂)",
-        algebraSteps: [
-          `Step 1: Total momentum before collision: p_total = m₁·v₁ = ${m1} × ${v1} = ${totalP} kg·m/s`,
-          `Step 2: Add masses together: m_total = m₁ + m₂ = ${m1} + ${m2} = ${totalM} kg`,
-          `Step 3: Solve for vf: vf = p_total / m_total = ${totalP} / ${totalM} = <strong>${answer} m/s</strong>`
+        displayFormulaLatex: "v_f = \\frac{m_1 v_1 + m_2 v_2}{m_1 + m_2}",
+        algebraStepsLatex: [
+          `Calculate total initial momentum: $$p_{\\text{initial}} = m_1 v_1 + m_2(0) = (${m1})(${v1}) = ${totalP}\\text{ kg}\\cdot\\text{m/s}$$`,
+          `Calculate combined mass: $$m_{\\text{total}} = m_1 + m_2 = ${m1} + ${m2} = ${totalM}\\text{ kg}$$`,
+          `Solve for final speed: $$v_f = \\frac{p_{\\text{initial}}}{m_{\\text{total}}} = \\frac{${totalP}}{${totalM}} = \\mathbf{${answer}\\text{ m/s}}$$`
         ],
         answer: answer,
         unit: "m/s",
-        trapAlert: "⚠️ Keyword Trigger: 'Stick together' means the masses combine! Always divide total initial momentum by (m1 + m2)."
+        trapAlert: `⚠️ Keyword Trigger: 'Stick together' means masses combine! Always divide total initial momentum by $(m_1 + m_2)$.`
       };
     }
   }
