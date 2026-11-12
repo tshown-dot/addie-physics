@@ -1,8 +1,9 @@
 // Runs a study session or a practice test: shows one item at a time, gives
 // feedback, records the result and brings missed items back.
 import { ITEMS, FORMULAS, chapter } from './content/index.js';
+import { FIGS } from './content/figures.js';
 import { md, tex, esc } from './render.js';
-import { state, rec, record, save, today } from './store.js';
+import { state, rec, record, save, today, markDone } from './store.js';
 import { shuffle, parseNum, close, finalize, fmt } from './util.js';
 import { openSheet } from './sheet.js';
 
@@ -29,33 +30,45 @@ function feedback(good, title, body) {
 }
 
 // ---------- concept question ----------
+// "All of the above" style options stay at the bottom; the rest are shuffled.
+const PINNED = /^(all|none|both|either|neither|more than one|it is the same)\b/i;
+function optionOrder(v) {
+  const idx = v.o.map((_, i) => i);
+  if (v.fixed) return idx;
+  return [...shuffle(idx.filter((i) => !PINNED.test(v.o[i]))), ...idx.filter((i) => PINNED.test(v.o[i]))];
+}
+const figHTML = (v) => (v.fig ? `<div class="fig">${FIGS[v.fig]}</div>` : '');
+
 function renderQuestion(el, item, ctx) {
   const q = item.data;
-  const order = shuffle([0, 1, 2, 3]);
+  const versions = [q, ...(q.alts || [])];
+  const v = versions[Math.floor(Math.random() * versions.length)]; // a reworded version, sometimes
+  const why = v.why || q.why;
+  const order = optionOrder(v);
   el.innerHTML = `${tag(item, 'Concept')}
-    <h2 class="prompt">${md(q.q)}</h2>
-    <div class="opts">${order.map((oi, n) => `<button class="opt" data-i="${oi}"><span class="letter">${'ABCD'[n]}</span><span>${md(q.o[oi])}</span></button>`).join('')}</div>
+    <h2 class="prompt">${md(v.q)}</h2>
+    ${figHTML(v)}
+    <div class="opts">${order.map((oi, n) => `<button class="opt" data-i="${oi}"><span class="letter">${'ABCDE'[n]}</span><span>${md(v.o[oi])}</span></button>`).join('')}</div>
     <div class="fb" aria-live="polite"></div>`;
   const buttons = [...el.querySelectorAll('.opt')];
   buttons.forEach((b) => (b.onclick = () => {
     const i = Number(b.dataset.i);
     if (ctx.mode === 'test') {
       buttons.forEach((x) => x.classList.toggle('picked', x === b));
-      ctx.setAnswer({ clean: i === q.a, given: md(q.o[i]) });
+      ctx.setAnswer({ clean: i === v.a, given: md(v.o[i]), v });
       return;
     }
-    buttons.forEach((x) => { x.disabled = true; if (Number(x.dataset.i) === q.a) x.classList.add('right'); });
-    if (i !== q.a) b.classList.add('wrong');
-    el.querySelector('.fb').innerHTML = feedback(i === q.a, i === q.a ? 'Correct' : 'Not quite',
-      `<p>${md(q.why)}</p>${q.trap ? `<p class="trapnote"><strong>Watch out:</strong> ${md(q.trap)}</p>` : ''}`);
-    ctx.answered(i === q.a);
+    buttons.forEach((x) => { x.disabled = true; if (Number(x.dataset.i) === v.a) x.classList.add('right'); });
+    if (i !== v.a) b.classList.add('wrong');
+    const note = i !== v.a && v.x && v.x[v.o[i]];
+    el.querySelector('.fb').innerHTML = feedback(i === v.a, i === v.a ? 'Correct' : 'Not quite',
+      `${note ? `<p class="whynot"><strong>Why not “${md(v.o[i])}”:</strong> ${md(note)}</p>` : ''}
+       <p>${i === v.a ? '' : `<strong>${md(v.o[v.a])}.</strong> `}${md(why)}</p>${q.trap && v === q ? `<p class="trapnote"><strong>Watch out:</strong> ${md(q.trap)}</p>` : ''}`);
+    ctx.answered(i === v.a);
   }));
 }
 
-export const questionReview = (item) => {
-  const q = item.data;
-  return `<p><strong>Answer:</strong> ${md(q.o[q.a])}</p><p>${md(q.why)}</p>`;
-};
+export const questionReview = (item, v = item.data) => `${figHTML(v)}<p><strong>Answer:</strong> ${md(v.o[v.a])}</p><p>${md(v.why || item.data.why)}</p>`;
 
 // ---------- formula finder ----------
 function renderScenario(el, item, ctx) {
@@ -86,7 +99,7 @@ export const scenarioReview = (item) => `<p><strong>Answer:</strong> ${FORMULAS[
 
 // ---------- math problem ----------
 const answerLine = (g) => `$${fmt(g.answer)}$${g.unit ? ' ' + esc(g.unit) : ''}`;
-export const solutionHTML = (g) => `<ol class="solution">${g.steps.map((s) => `<li><span>${md(s.say)}</span><div class="work">${tex(s.work)}</div></li>`).join('')}</ol>`;
+export const solutionHTML = (g, formLatex) => `${formLatex ? `<p class="note">On the test, write the formula first, then each line of working. The professor gives credit for it.</p><div class="work">${tex(formLatex)}</div>` : ''}<ol class="solution">${g.steps.map((s) => `<li><span>${md(s.say)}</span><div class="work">${tex(s.work)}</div></li>`).join('')}</ol>`;
 const givensHTML = (g) => `<div class="givens">${g.givens.map((x) => `<span class="given">${tex(x.s)} <em>=</em> ${tex(x.v)}</span>`).join('')}</div>`;
 
 function numberForm(g, { unit = '', label = 'Check' } = {}) {
@@ -122,25 +135,25 @@ function renderProblem(el, item, ctx) {
   el.addEventListener('click', (e) => { if (e.target.closest('[data-sheet]')) openSheet(ctx.chapters); });
 
   if (ctx.mode === 'test') {
-    const b = add(`${numberForm(g, { unit: g.unit, label: 'Save answer' })}${sheetBtn}`);
+    const b = add(`<p class="note">A written problem. On the real test these carry most of the points, and the professor gives credit for your working, so write it out on paper first.</p>${numberForm(g, { unit: g.unit, label: 'Save answer' })}${sheetBtn}`);
     const input = b.querySelector('input');
     const saveIt = () => {
       const v = parseNum(input.value);
-      ctx.setAnswer({ clean: !Number.isNaN(v) && close(v, g.answer), given: esc(input.value || '(blank)'), gen: g });
+      ctx.setAnswer({ clean: !Number.isNaN(v) && close(v, g.answer), given: esc(input.value || '(blank)'), gen: g, form: form.latex });
       b.querySelector('.msg').textContent = input.value ? 'Saved.' : '';
     };
-    ctx.setAnswer({ clean: false, given: '(blank)', gen: g });
+    ctx.setAnswer({ clean: false, given: '(blank)', gen: g, form: form.latex });
     input.addEventListener('input', saveIt);
     b.querySelector('form').onsubmit = (e) => { e.preventDefault(); saveIt(); };
     return;
   }
 
   const conclude = (ok) => {
-    const r = ctx.answered(clean && ok);
+    const r = ctx.answered(clean && ok, level);
     const note = r && !ctx.level ? `<p class="levelnote">${LEVEL_NOTE[r.level]}</p>` : '';
     const title = clean && ok ? 'Correct' : ok ? 'You got there' : `The answer is ${md(answerLine(g))}`;
     el.querySelector('.fb').innerHTML = feedback(ok, title,
-      `${level === 1 && ok ? `<p>Answer: ${md(answerLine(g))}</p>` : `<p>Full working:</p>${solutionHTML(g)}`}${note}`);
+      `${level === 1 && ok ? `<p>Answer: ${md(answerLine(g))}</p>` : `${solutionHTML(g, form.latex)}`}${note}`);
   };
 
   // --- Level 1: guided, one small step at a time ---
@@ -287,10 +300,10 @@ export function runSession(root, opts) {
       level: opts.level || 0,
       chapters: opts.chapters,
       setAnswer(a) { pending = { key: entry.key, ...a }; },
-      answered(clean) {
+      answered(clean, usedLevel) {
         let r = null;
         if (!entry.retry) {
-          r = record(entry.key, clean);
+          r = record(entry.key, clean, usedLevel);
           results.push({ key: entry.key, clean });
           if (!clean) queue.splice(Math.min(queue.length, i + 4), 0, { key: entry.key, retry: true });
         }
@@ -310,6 +323,7 @@ export function runSession(root, opts) {
   }
 
   function finishLearn() {
+    if (opts.onFinish) opts.onFinish();
     const right = results.filter((r) => r.clean).length;
     const missed = results.filter((r) => !r.clean);
     const line = right === results.length ? 'Every one right first time.'
@@ -331,26 +345,34 @@ export function runSession(root, opts) {
   }
 
   function finishTest() {
-    results.forEach((r) => record(r.key, r.clean));
-    const right = results.filter((r) => r.clean).length;
+    results.forEach((r) => record(r.key, r.clean, 3));
+    markDone('test');
+    const isP = (r) => ITEMS[r.key].kind === 'p';
+    const mc = results.filter((r) => !isP(r));
+    const pr = results.filter(isP);
+    const mcRight = mc.filter((r) => r.clean).length;
+    const prRight = pr.filter((r) => r.clean).length;
+    // Scored like the real test: multiple choice is 40 points, written problems 60.
+    const pct = Math.round(!pr.length ? (100 * mcRight) / mc.length
+      : !mc.length ? (100 * prRight) / pr.length
+        : (40 * mcRight) / mc.length + (60 * prRight) / pr.length);
     const byCh = {};
-    results.forEach((r) => {
+    mc.forEach((r) => {
       const ch = ITEMS[r.key].ch;
       byCh[ch] = byCh[ch] || { right: 0, n: 0 };
       byCh[ch].n++;
       if (r.clean) byCh[ch].right++;
     });
-    const pct = Math.round((100 * right) / results.length);
-    state.tests.push({ day: today(), right, n: results.length, pct, byCh });
+    state.tests.push({ day: today(), right: mcRight + prRight, n: results.length, pct, byCh });
     save();
     const minutes = Math.max(1, Math.round((Date.now() - started) / 60000));
     const review = (r) => {
       const item = ITEMS[r.key];
-      const body = item.kind === 'q' ? questionReview(item)
+      const body = item.kind === 'q' ? questionReview(item, r.v)
         : item.kind === 's' ? scenarioReview(item)
-          : `<p>${md(r.gen.prompt)}</p><p><strong>Answer:</strong> ${md(answerLine(r.gen))}</p>${solutionHTML(r.gen)}`;
-      return `<li class="${r.clean ? 'ok' : 'miss'}"><p class="tag">Chapter ${item.ch} · ${KIND_LABEL[item.kind]} · ${r.clean ? 'correct' : 'missed'}</p>
-        ${item.kind === 'p' ? '' : `<p class="rq">${itemTitle(item)}</p>`}
+          : `<p>${md(r.gen.prompt)}</p><p><strong>Answer:</strong> ${md(answerLine(r.gen))}</p>${solutionHTML(r.gen, r.form)}`;
+      return `<li class="${r.clean ? 'ok' : 'miss'}"><p class="tag">Chapter ${item.ch} · ${isP(r) ? 'Written problem' : KIND_LABEL[item.kind]} · ${r.clean ? 'correct' : 'missed'}</p>
+        ${item.kind === 'p' ? '' : `<p class="rq">${md((r.v || item.data).q)}</p>`}
         ${r.clean ? '' : `<p class="yours">Your answer: ${r.given}</p>`}${body}</li>`;
     };
     const missed = results.filter((r) => !r.clean);
@@ -358,15 +380,20 @@ export function runSession(root, opts) {
       <article class="card center">
         <p class="tag">Practice test result</p>
         <p class="score">${pct}<span>%</span></p>
-        <p>${right} of ${results.length} correct in about ${minutes} min.</p>
-        <table class="bych">${Object.entries(byCh).map(([ch, v]) => `<tr><th>Chapter ${ch}: ${chapter(ch).title}</th><td>${v.right} / ${v.n}</td></tr>`).join('')}</table>
+        <p>Scored like the real test, in about ${minutes} min.</p>
+        <table class="bych">
+          ${mc.length ? `<tr><th><strong>Multiple choice</strong> (40 points)</th><td>${mcRight} / ${mc.length}</td></tr>` : ''}
+          ${Object.entries(byCh).map(([ch, v]) => `<tr class="sub"><th>Chapter ${ch}: ${chapter(ch).title}</th><td>${v.right} / ${v.n}</td></tr>`).join('')}
+          ${pr.length ? `<tr><th><strong>Written problems</strong> (60 points)</th><td>${prRight} / ${pr.length}</td></tr>` : ''}
+        </table>
+        ${pr.length ? '<p class="quiet">Written problems are marked right or wrong here. On the real test, working that is partly right still earns points.</p>' : ''}
         <div class="row center">
           ${missed.length ? '<button class="btn primary" id="fix">Practise what I missed</button>' : ''}
           <a class="btn" href="#/">Home</a>
         </div>
       </article>
       ${missed.length ? `<h2 class="section">What you missed</h2><ul class="test-review">${missed.map(review).join('')}</ul>` : ''}
-      <details class="card"><summary>Show the ones you got right (${right})</summary><ul class="test-review">${results.filter((r) => r.clean).map(review).join('')}</ul></details>`;
+      <details class="card"><summary>Show the ones you got right (${results.length - missed.length})</summary><ul class="test-review">${results.filter((r) => r.clean).map(review).join('')}</ul></details>`;
     const fix = root.querySelector('#fix');
     if (fix) fix.onclick = () => runSession(root, { title: 'Fixing test misses', keys: missed.map((m) => m.key), chapters: opts.chapters });
     window.scrollTo(0, 0);

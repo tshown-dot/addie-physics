@@ -3,7 +3,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { CHAPTERS, FORMULAS, ITEMS } from '../js/content/index.js';
+import { CHAPTERS, FORMULAS, ITEMS, EXTRA_IDS } from '../js/content/index.js';
+import { FIGS } from '../js/content/figures.js';
 import { close, finalize, parseNum } from '../js/util.js';
 
 const katex = createRequire(import.meta.url)('../vendor/katex/katex.min.js');
@@ -32,12 +33,21 @@ test('ids are unique', () => {
 });
 
 test('questions are well formed', () => {
-  for (const c of CHAPTERS) for (const q of c.questions) {
-    assert.equal(q.o.length, 4, q.id);
-    assert.ok(q.a >= 0 && q.a < 4, q.id);
-    assert.equal(new Set(q.o).size, 4, `duplicate options in ${q.id}`);
-    assert.ok(q.why, q.id);
-    [q.q, q.why, q.trap || '', ...q.o].forEach((s) => checkTex(s, q.id));
+  for (const id of EXTRA_IDS) assert.ok(ITEMS[`q:${id}`], `extra.js refers to unknown question ${id}`);
+  for (const c of CHAPTERS) for (const base of c.questions) {
+    assert.ok(base.why, base.id);
+    for (const q of [base, ...(base.alts || [])]) {
+      assert.ok(q.o.length >= 3 && q.o.length <= 5, base.id);
+      assert.ok(q.a >= 0 && q.a < q.o.length, base.id);
+      assert.equal(new Set(q.o).size, q.o.length, `duplicate options in ${base.id}`);
+      if (q.fig) assert.ok(FIGS[q.fig], `${base.id}: no figure ${q.fig}`);
+      for (const [opt, note] of Object.entries(q.x || {})) {
+        assert.ok(q.o.includes(opt), `${base.id}: note for unknown option "${opt}"`);
+        assert.notEqual(q.o.indexOf(opt), q.a, `${base.id}: note on the correct option`);
+        checkTex(note, base.id);
+      }
+      [q.q, q.why || '', q.trap || '', ...q.o].forEach((s) => checkTex(s, base.id));
+    }
   }
 });
 

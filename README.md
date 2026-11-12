@@ -6,14 +6,17 @@ The content is written from the professor's lecture slides, the textbook chapter
 
 ## What it does
 
-- **Today** – one button starts a 12-question session mixing concepts, formula picking and math. Items she missed come back first; items she knows come back after 1, 2, 4, 7 days.
+- **Today's plan** – a daily session (missed items come back first; known items return after 1, 2, 4, 7 days), the professor's test-review problems, and a practice test.
+- **Test-week mode** – in the last 7 days before the test date, reviews come back faster and sessions make sure everything gets covered.
 - **Math trainer** – every problem type has three levels, and she moves up or down automatically:
   1. **Guided**: pick the formula, pick the rearranged version, then one calculator step at a time.
   2. **Coached**: the givens and the rearranged formula are shown; she does the working.
   3. **On your own**: just the question and her formula sheet, like the test.
   Wrong answers get specific feedback ("you forgot to square the distance") instead of just the right number.
 - **Formula finder** – read a word problem, choose which formula it calls for, then see the clue words.
-- **Practice test** – no hints and no feedback until the end, then a score by chapter and a review of every miss.
+- **Practice test** – laid out and scored like the professor's tests (40 multiple choice worth 40 points, 3 written problems worth 60), with no feedback until the end.
+- **Diagrams, reworded questions and wrong-choice explanations** – concept questions appear in more than one wording, some with figures, and explain why the choice she picked is wrong.
+- **Backup** – progress can be saved to a file and restored on another device.
 - **Formula sheet** – every formula with its trigger words and rearranged forms, printable, since she brings her own sheet to the test.
 - **Chapters** – short plain-English summaries, common traps, and per-chapter practice.
 
@@ -31,7 +34,7 @@ Then visit `http://localhost:8000`. On GitHub Pages it is served from the reposi
 
 ## Adding or changing content
 
-Each chapter is one file in `js/content/`. A chapter lists its big ideas, traps, formulas, concept questions, formula-finder scenarios and math problem generators. Add the chapter to `js/content/index.js` and it appears everywhere.
+Each chapter is one file in `js/content/`; `extra.js` adds reworded versions, wrong-choice notes and diagram questions, and `figures.js` holds the diagrams. A chapter lists its big ideas, traps, formulas, concept questions, formula-finder scenarios and math problem generators. Add the chapter to `js/content/index.js` and it appears everywhere.
 
 Check the content after any change:
 

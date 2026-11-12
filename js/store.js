@@ -5,6 +5,7 @@ import { shuffle } from './util.js';
 
 const KEY = 'addie_physics_v2';
 const INTERVALS = [0, 1, 2, 4, 7, 14]; // days until an item comes back, by box
+const CRAM_INTERVALS = [0, 0, 1, 1, 2, 3]; // the same, in the last week before the test
 
 function load() {
   const base = { items: {}, settings: { testDate: '', g: 9.8 }, days: {}, tests: [] };
@@ -31,22 +32,40 @@ export const activeChapters = () => TEST_CHAPTERS.slice();
 const blank = () => ({ box: 0, due: 0, seen: 0, right: 0, wrong: 0, level: 1, up: -1 });
 export const rec = (key) => state.items[key] || blank();
 
-// Record a first attempt. "clean" means right first time without being shown the answer.
-export function record(key, clean) {
+export function daysToTest() {
+  if (!state.settings.testDate) return null;
+  const [y, m, d] = state.settings.testDate.split('-').map(Number);
+  return dayNumber(new Date(y, m - 1, d)) - today();
+}
+
+// Test week: the last 7 days before the test. Reviews come back faster.
+export function testWeek() {
+  const d = daysToTest();
+  return d !== null && d >= 0 && d <= 7;
+}
+
+// Record a first attempt. "clean" means right first time without being shown
+// the answer. usedLevel is the amount of help a math problem was done with.
+export function record(key, clean, usedLevel) {
   const r = (state.items[key] = state.items[key] || blank());
   const isProblem = key.startsWith('p:');
   const t = today();
+  const cram = testWeek();
   r.seen++;
+  r.ok = clean;
+  r.lv = usedLevel || r.level;
+  if (r.up !== t) r.upN = 0;
   if (clean) {
     r.right++;
     if (isProblem) r.level = Math.min(3, r.level + 1);
-    if (r.up !== t) { r.box = Math.min(5, r.box + 1); r.up = t; } // one promotion a day: spacing matters
+    // Spacing matters, so an item normally moves up once a day (twice in test week).
+    if ((r.upN || 0) < (cram ? 2 : 1)) { r.box = Math.min(5, r.box + 1); r.up = t; r.upN = (r.upN || 0) + 1; }
   } else {
     r.wrong++;
     if (isProblem) r.level = Math.max(1, r.level - 1);
     r.box = Math.max(0, r.box - (isProblem ? 1 : 2));
   }
-  r.due = t + (clean ? INTERVALS[r.box] : 0);
+  r.due = t + (clean ? (cram ? CRAM_INTERVALS : INTERVALS)[r.box] : 0);
   const d = (state.days[t] = state.days[t] || { n: 0, right: 0 });
   d.n++;
   if (clean) d.right++;
@@ -54,11 +73,21 @@ export function record(key, clean) {
   return r;
 }
 
+// Note that part of today's plan is finished: 'session', 'star' or 'test'.
+export function markDone(what) {
+  const t = today();
+  const d = (state.days[t] = state.days[t] || { n: 0, right: 0 });
+  d.did = { ...(d.did || {}), [what]: true };
+  save();
+}
+export const didToday = () => (state.days[today()] || {}).did || {};
+
+// Test readiness for one item, from the most recent attempt: 1 if she got it
+// right first time (for math: on her own), partial credit for math done with help.
 export function mastery(key) {
   const r = state.items[key];
-  if (!r) return 0;
-  const boxPart = Math.min(r.box, 3) / 3;
-  return key.startsWith('p:') ? 0.5 * ((r.level - 1) / 2) + 0.5 * boxPart : boxPart;
+  if (!r || !r.ok) return 0;
+  return key.startsWith('p:') ? [0, 0.3, 0.6, 1][r.lv || 1] : 1;
 }
 
 export const itemsIn = (chapters, kinds = ['q', 's', 'p']) =>
@@ -81,17 +110,19 @@ export function weakSpots(chapters) {
     .sort((a, b) => (rec(b.key).wrong - rec(b.key).right) - (rec(a.key).wrong - rec(a.key).right));
 }
 
-// Choose items for a study session: things due for review first (weakest first),
-// then things never seen, then everything else.
+// Choose items for a study session: recent misses first, then things due for
+// review (weakest first), then things never seen, then everything else.
 export function buildSession({ chapters, kinds = ['q', 's', 'p'], n = 12 }) {
   const t = today();
+  const cram = testWeek();
   const rank = (it) => {
     const r = state.items[it.key];
-    if (!r) return (it.data.star ? 50 : 100) + Math.random(); // test-review items are introduced first
-    if (r.due <= t) return r.box + Math.random();
+    if (!r) return (cram ? 3 : it.data.star ? 50 : 100) + Math.random(); // in test week, cover everything
+    if (!r.ok) return Math.random();
+    if (r.due <= t) return 1 + r.box + Math.random();
     return 200 + r.due + Math.random();
   };
-  const share = { q: 0.5, s: 0.2, p: 0.3 };
+  const share = { q: 0.55, s: 0.15, p: 0.3 };
   const total = kinds.reduce((s, k) => s + share[k], 0);
   const chosen = [];
   const rest = [];
@@ -106,13 +137,18 @@ export function buildSession({ chapters, kinds = ['q', 's', 'p'], n = 12 }) {
   return shuffle(chosen.slice(0, n)).map((it) => it.key);
 }
 
-// A practice test: a fresh random mix, not driven by the review schedule.
-export function buildTest({ chapters, n = 20 }) {
-  const take = (kind, count) => shuffle(itemsIn(chapters, [kind])).slice(0, count);
-  const p = take('p', Math.round(n * 0.25));
-  const s = take('s', Math.round(n * 0.15));
-  const q = take('q', n - p.length - s.length);
-  return shuffle([...q, ...s, ...p]).map((it) => it.key);
+// A practice test in the professor's format: multiple choice first, then the
+// written problems. The problems are drawn from the test-review types first,
+// one per formula, then from the other problem types.
+export function buildTest({ chapters, mc = 40, problems = 3 }) {
+  const q = shuffle(itemsIn(chapters, ['q'])).slice(0, mc);
+  const all = shuffle(itemsIn(chapters, ['p']));
+  const picked = [];
+  for (const it of all.filter((x) => x.data.star)) {
+    if (picked.length < problems && !picked.some((x) => x.data.f === it.data.f)) picked.push(it);
+  }
+  for (const it of all) if (picked.length < problems && !picked.includes(it)) picked.push(it);
+  return [...q, ...shuffle(picked)].map((it) => it.key);
 }
 
 export function dayStreak() {
@@ -123,10 +159,12 @@ export function dayStreak() {
   return n;
 }
 
-export function daysToTest() {
-  if (!state.settings.testDate) return null;
-  const [y, m, d] = state.settings.testDate.split('-').map(Number);
-  return dayNumber(new Date(y, m - 1, d)) - today();
+// Backup and restore, so progress can be moved to another device.
+export const exportData = () => JSON.stringify({ app: 'addie-physics', version: 2, saved: new Date().toISOString(), state });
+export function importData(text) {
+  const data = JSON.parse(text);
+  if (data.app !== 'addie-physics' || !data.state || typeof data.state.items !== 'object') throw new Error('not a backup file');
+  localStorage.setItem(KEY, JSON.stringify(data.state));
 }
 
 export const starred = () => Object.values(ITEMS).filter((it) => it.data.star);

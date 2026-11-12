@@ -2,9 +2,17 @@ import ch9 from './ch9.js';
 import ch10 from './ch10.js';
 import ch11 from './ch11.js';
 import ch12 from './ch12.js';
+import { EXTRA, NEW_QUESTIONS } from './extra.js';
 
 // Every chapter, in order.
 export const CHAPTERS = [ch9, ch10, ch11, ch12];
+// Layer the wrong-choice notes, reworded versions and diagrams onto the questions.
+for (const ch of CHAPTERS) {
+  ch.questions.push(...(NEW_QUESTIONS[ch.id] || []));
+  for (const q of ch.questions) Object.assign(q, EXTRA[q.id] || {});
+}
+export const EXTRA_IDS = Object.keys(EXTRA);
+
 export const TEST_CHAPTERS = CHAPTERS.map((c) => c.id);
 
 // Flat lookup tables. Item keys look like "q:q9-1", "s:s9-1", "p:p9-farther".
