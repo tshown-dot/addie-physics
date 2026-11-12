@@ -87,7 +87,7 @@ export function buildSession({ chapters, kinds = ['q', 's', 'p'], n = 12 }) {
   const t = today();
   const rank = (it) => {
     const r = state.items[it.key];
-    if (!r) return 100 + Math.random();
+    if (!r) return (it.data.star ? 50 : 100) + Math.random(); // test-review items are introduced first
     if (r.due <= t) return r.box + Math.random();
     return 200 + r.due + Math.random();
   };
@@ -128,5 +128,7 @@ export function daysToTest() {
   const [y, m, d] = state.settings.testDate.split('-').map(Number);
   return dayNumber(new Date(y, m - 1, d)) - today();
 }
+
+export const starred = () => Object.values(ITEMS).filter((it) => it.data.star);
 
 export const chapterName = (id) => { const c = CHAPTERS.find((x) => x.id === id); return c ? `Ch ${c.id}` : ''; };

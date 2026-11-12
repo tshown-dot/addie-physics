@@ -52,11 +52,11 @@ export default {
     {
       id: 'gravity',
       name: "Newton's law of gravity (with G)",
-      latex: T`F = G\,\dfrac{m_1 m_2}{d^2}`,
-      plain: 'Use this only when you are given the actual masses in kg and the distance in metres and need the force in newtons.',
+      latex: T`F_g = G\,\dfrac{m_1 m_2}{r^2}`,
+      plain: 'On the test review. Use this when you are given the actual masses in kg and the distance in metres and need the force in newtons. G = 6.67 × 10⁻¹¹.',
       triggers: ['masses in kg', 'distance between centres in metres', 'find the force in newtons', 'G'],
       forms: [
-        { for: 'F', label: 'force', latex: T`F = G\,\dfrac{m_1 m_2}{d^2}`, tip: 'Multiply the masses, divide by distance squared, then multiply by G.' },
+        { for: 'F', label: 'force', latex: T`F_g = G\,\dfrac{m_1 m_2}{r^2}`, tip: 'Multiply the masses, multiply by G, then divide by the distance squared.' },
       ],
     },
     {
@@ -264,30 +264,30 @@ export default {
       },
     },
     {
-      id: 'p9-full', title: 'Calculator challenge: the full gravity equation', f: 'gravity',
+      id: 'p9-full', star: true, title: "Newton's gravitation equation (test review)", f: 'gravity',
       make(r) {
-        const a = pick(r, [2, 3, 4, 5, 6]);
-        const b = pick(r, [2, 3, 5]);
-        const p = pick(r, [3, 4, 5]);
-        const q = pick(r, [2, 3, 4]);
-        const c = pick(r, [1, 2]);
-        const s = pick(r, [1, 2]);
-        const m1 = a * 10 ** p, m2 = b * 10 ** q, d = c * 10 ** s;
+        const m1 = pick(r, [2, 3, 4, 5, 6, 8, 10]);
+        const m2 = pick(r, [2, 3, 5, 6, 10, 20]);
+        const d = pick(r, [2, 3, 4, 5, 10]);
         const G = 6.67e-11;
-        const ans = (G * m1 * m2) / (d * d);
+        const top = G * m1 * m2;
+        const ans = top / (d * d);
         return {
-          prompt: T`Two large rocks have masses $${sci(m1)}$ kg and $${sci(m2)}$ kg. Their centres are **${d} m** apart. Find the gravitational force between them. Use $G = 6.67 \times 10^{-11}$. (Type an answer like 6.67e-5 or 6.67x10^-5.)`,
-          givens: [{ s: 'm_1', v: T`${sci(m1)}\text{ kg}` }, { s: 'm_2', v: T`${sci(m2)}\text{ kg}` }, { s: 'd', v: T`${d}\text{ m}` }],
+          prompt: T`A **${m1} kg** ball and a **${m2} kg** ball are **${d} m** apart (centre to centre). Find the gravitational force between them. Use $G = 6.67 \times 10^{-11}$. Type your answer like 1.04e-10 or 1.04x10^-10.`,
+          givens: [{ s: 'm_1', v: T`${m1}\text{ kg}` }, { s: 'm_2', v: T`${m2}\text{ kg}` }, { s: 'r', v: T`${d}\text{ m}` }, { s: 'G', v: T`6.67 \times 10^{-11}` }],
           steps: [
-            { say: 'Multiply the two masses.', work: T`(${sci(m1)})(${sci(m2)}) = ${sci(m1 * m2)}`, v: m1 * m2 },
-            { say: 'Square the distance.', work: T`${d}^2 = ${fmt(d * d)}`, v: d * d },
-            { say: 'Divide the first answer by the second.', work: T`\dfrac{${sci(m1 * m2)}}{${fmt(d * d)}} = ${sci((m1 * m2) / (d * d))}`, v: (m1 * m2) / (d * d) },
-            { say: T`Multiply by $G = 6.67 \times 10^{-11}$. On a calculator press 6.67, then EE (or EXP), then -11.`, work: T`F = ${sci(ans)}\text{ N}`, v: ans },
+            { say: 'Multiply the two masses.', work: T`${m1} \times ${m2} = ${m1 * m2}`, v: m1 * m2 },
+            { say: T`Multiply that by $G$. On a calculator: 6.67, then EE (or EXP), then -11, then × ${m1 * m2}.`, work: T`6.67 \times 10^{-11} \times ${m1 * m2} = ${sci(top)}`, v: top },
+            { say: 'Square the distance.', work: T`${d}^2 = ${d * d}`, v: d * d },
+            { say: 'Divide the top by the squared distance.', work: T`F_g = \dfrac{${sci(top)}}{${d * d}} = ${sci(ans)}\text{ N}`, v: ans },
           ],
           answer: ans, unit: 'N',
           mistakes: [
-            { v: (G * m1 * m2) / d, msg: 'You divided by the distance. It has to be the distance squared.' },
-            { v: (m1 * m2) / (d * d), msg: T`Nearly there. You still need to multiply by $G = 6.67 \times 10^{-11}$.` },
+            { v: top / d, msg: T`You divided by ${d}. The distance has to be **squared**: divide by ${d * d}.` },
+            { v: (m1 * m2) / (d * d), msg: T`You left out $G$. Multiply by $6.67 \times 10^{-11}$.` },
+            { v: top, msg: 'That is the top of the fraction. Now divide by the distance squared.' },
+            { v: (6.67 * m1 * m2) / (d * d), msg: T`The number part is right, but the power of ten is missing. Use the EE key for $\times 10^{-11}$.` },
+            { v: top * d * d, msg: 'Divide by the distance squared. Do not multiply.' },
           ],
         };
       },

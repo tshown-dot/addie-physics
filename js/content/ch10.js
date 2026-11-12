@@ -77,8 +77,8 @@ export default {
       ],
     },
     {
-      id: 'range', name: 'Range equation (Lab 5)', latex: T`R = \dfrac{v^2 \sin(2\theta)}{g}`,
-      plain: 'How far a projectile launched at an angle lands, back at the same height. Double the angle before taking the sine.',
+      id: 'range', name: 'Range equation (projectile motion)', latex: T`R = \dfrac{v^2 \sin(2\theta)}{g}`,
+      plain: 'On the test review. How far a projectile launched at an angle travels. Double the angle before taking the sine.',
       triggers: ['launched at an angle', 'how far will it go', 'range', 'launcher'],
       forms: [
         { for: 'R', label: 'range', latex: T`R = \dfrac{v^2 \sin(2\theta)}{g}`, tip: 'Square the speed, double the angle, take its sine, multiply, divide by g. Calculator in DEGREE mode.' },
@@ -316,15 +316,15 @@ export default {
       },
     },
     {
-      id: 'p10-range', title: 'Range equation (Lab 5)', f: 'range',
+      id: 'p10-range', star: true, title: 'Range equation (test review)', f: 'range',
       make(r, ctx) {
         const g = ctx.g;
-        const v = pick(r, [3.2, 4, 5, 6, 10]);
-        const th = pick(r, [15, 20, 30, 40, 45]);
+        const v = pick(r, [3.2, 5, 10, 20, 30, 40, 50]);
+        const th = pick(r, [15, 20, 25, 30, 35, 40, 45]);
         const s = Math.sin((2 * th * Math.PI) / 180);
         const ans = (v * v * s) / g;
         return {
-          prompt: T`A launcher fires a marble at **${v} m/s** at an angle of **${th}°** above the table. How far away does it land (back at launch height)? Use $g = ${g}\text{ m/s}^2$ and make sure your calculator is in degree mode.`,
+          prompt: T`A projectile is launched at **${v} m/s** at an angle of **${th}°** above the ground. How far does it go before it lands? Use $g = ${g}\text{ m/s}^2$ and make sure your calculator is in degree mode.`,
           givens: [{ s: 'v', v: T`${v}\text{ m/s}` }, { s: T`\theta`, v: T`${th}^\circ` }, { s: 'g', v: T`${g}\text{ m/s}^2` }],
           steps: [
             { say: 'Square the launch speed.', work: T`${v}^2 = ${fmt(v * v)}`, v: v * v },

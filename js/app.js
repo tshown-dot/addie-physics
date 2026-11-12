@@ -3,7 +3,7 @@ import { CHAPTERS, ITEMS, TEST_CHAPTERS, chapter } from './content/index.js';
 import { md, tex, esc } from './render.js';
 import {
   state, save, reset, activeChapters, chapterMastery, dueCount, weakSpots, buildSession, buildTest,
-  dayStreak, daysToTest, itemsIn, mastery, today,
+  dayStreak, daysToTest, itemsIn, mastery, today, starred, rec,
 } from './store.js';
 import { runSession } from './player.js';
 import { sheetHTML } from './sheet.js';
@@ -66,6 +66,15 @@ function home() {
       <button class="btn primary big" id="go">${didToday ? 'Another round' : 'Start'}</button>
     </section>
 
+    <section class="card review">
+      <div>
+        <h2>⭐ Test review problems</h2>
+        <p>The math your professor went over on Nov 11: the gravitation equation, the range equation, and density (find density, volume or mass).</p>
+        <ul class="review-list">${starred().map((it) => `<li><span class="chip">${['', 'Guided', 'Coached', 'On your own'][rec(it.key).level]}</span> ${esc(it.data.title.replace(' (test review)', ''))}</li>`).join('')}</ul>
+      </div>
+      <button class="btn primary" id="star">Practise these</button>
+    </section>
+
     <section class="stats">
       <div><b>${pct(overall)}</b><span>mastered</span></div>
       <div><b>${seen}<small> / ${items.length}</small></b><span>items tried</span></div>
@@ -95,6 +104,8 @@ function home() {
     </details>`;
 
   view.querySelector('#go').onclick = startToday;
+  const starGo = () => start({ title: 'Test review problems', keys: [...starred(), ...starred()].map((it) => it.key), chapters, again: starGo });
+  view.querySelector('#star').onclick = starGo;
   const weakBtn = view.querySelector('#weak');
   if (weakBtn) weakBtn.onclick = () => start({ title: 'Worth another look', keys: weakSpots(chapters).slice(0, 12).map((it) => it.key), chapters });
   view.querySelector('#testDate').onchange = (e) => { state.settings.testDate = e.target.value; save(); home(); };

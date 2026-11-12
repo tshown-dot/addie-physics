@@ -43,7 +43,7 @@ export default {
   formulas: [
     {
       id: 'density', name: 'Density', latex: T`\rho = \dfrac{m}{V}`,
-      plain: 'How tightly mass is packed. Your notes say a "find the volume" density problem is on the test.',
+      plain: 'On the test review. Asked for density: m ÷ V. Asked for volume: m ÷ ρ. Asked for mass: ρ × V.',
       triggers: ['density', 'mass and volume', 'what is the volume', 'g/cm³', 'kg/m³'],
       forms: [
         { for: 'rho', label: 'density', latex: T`\rho = \dfrac{m}{V}`, tip: 'Mass divided by volume.' },
@@ -123,7 +123,7 @@ export default {
 
   problems: [
     {
-      id: 'p12-volume', title: 'Volume from mass and density (test item)', f: 'density', form: 'V',
+      id: 'p12-volume', title: 'Volume from mass and density', f: 'density', form: 'V',
       make(r) {
         const [name, d] = pick(r, MAT.slice(0, 6));
         const V = pick(r, VOLS);
@@ -141,19 +141,55 @@ export default {
       },
     },
     {
-      id: 'p12-volume-kg', title: 'Volume in cubic metres', f: 'density', form: 'V',
+      id: 'p12-review-volume', star: true, title: 'Find the volume (test review)', f: 'density', form: 'V',
       make(r) {
-        const [name, d] = pick(r, [['water', 1000], ['cork', 240], ['oak wood', 750], ['ice', 920], ['aluminum', 2700], ['concrete', 2400]]);
-        const V = pick(r, [0.5, 2, 3, 4, 5, 10]);
-        const m = d * V;
+        const m = pick(r, [5, 6, 8, 9, 10, 12, 20]);
+        const d = pick(r, [1.5, 2.5, 4, 4.5, 7.5, 8]);
+        const V = m / d;
         return {
-          prompt: T`A quantity of ${name} has a mass of **${m} kg**. The density of ${name} is **${d} kg/m³**. What volume does it take up?`,
+          prompt: T`A material has a density of **${d} kg/m³**. You have **${m} kg** of it. What is its volume? (Round to 2 decimal places.)`,
           givens: [{ s: 'm', v: T`${m}\text{ kg}` }, { s: T`\rho`, v: T`${d}\text{ kg/m}^3` }],
-          steps: [{ say: 'Volume is mass divided by density.', work: T`V = \dfrac{${m}}{${d}} = ${V}\text{ m}^3`, v: V }],
+          steps: [{ say: 'Asked for volume: mass divided by density.', work: T`V = \dfrac{${m}}{${d}} = ${fmt(r2(V))}\text{ m}^3`, v: V }],
           answer: V, unit: 'm³',
           mistakes: [
             { v: m * d, msg: 'You multiplied. Volume = mass ÷ density.' },
             { v: d / m, msg: 'Upside down. Mass goes on top: V = m ÷ ρ.' },
+          ],
+        };
+      },
+    },
+    {
+      id: 'p12-review-density', star: true, title: 'Find the density (test review)', f: 'density', form: 'rho',
+      make(r) {
+        const m = pick(r, [5, 6, 9, 10, 12, 15, 20]);
+        const V = pick(r, [2, 3, 4, 5, 8]);
+        const d = m / V;
+        return {
+          prompt: T`An object has a mass of **${m} kg** and a volume of **${V} m³**. What is its density? (Round to 2 decimal places.)`,
+          givens: [{ s: 'm', v: T`${m}\text{ kg}` }, { s: 'V', v: T`${V}\text{ m}^3` }],
+          steps: [{ say: 'Density is mass divided by volume.', work: T`\rho = \dfrac{${m}}{${V}} = ${fmt(r2(d))}\text{ kg/m}^3`, v: d }],
+          answer: d, unit: 'kg/m³',
+          mistakes: [
+            { v: V / m, msg: 'Upside down. Density = mass ÷ volume.' },
+            { v: m * V, msg: 'Divide mass by volume. Do not multiply.' },
+          ],
+        };
+      },
+    },
+    {
+      id: 'p12-review-mass', star: true, title: 'Find the mass (test review)', f: 'density', form: 'm',
+      make(r) {
+        const d = pick(r, [1.5, 2.5, 4, 4.5, 7.5, 8]);
+        const V = pick(r, [2, 3, 4, 5, 6, 10]);
+        const m = d * V;
+        return {
+          prompt: T`A material has a density of **${d} kg/m³**. A sample of it has a volume of **${V} m³**. What is the mass of the sample?`,
+          givens: [{ s: T`\rho`, v: T`${d}\text{ kg/m}^3` }, { s: 'V', v: T`${V}\text{ m}^3` }],
+          steps: [{ say: 'Asked for mass: density times volume.', work: T`m = ${d} \times ${V} = ${fmt(m)}\text{ kg}`, v: m }],
+          answer: m, unit: 'kg',
+          mistakes: [
+            { v: V / d, msg: 'You divided. Mass = density × volume.' },
+            { v: d / V, msg: 'You divided. Mass = density × volume.' },
           ],
         };
       },

@@ -88,6 +88,8 @@ nav a.on span { filter: none; }
 
 .today { grid-template-columns: 1fr auto; align-items: center; background: linear-gradient(135deg, var(--brand-soft), var(--card)); }
 .today > div { display: grid; gap: 4px; }
+.review > div { display: grid; gap: 8px; }
+.review { border-left: 5px solid var(--brand); }
 @media (max-width: 520px) { .today { grid-template-columns: 1fr; } }
 
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
