@@ -1,5 +1,5 @@
 // Checks every piece of content: answers, worked steps, typical-mistake values,
-// formula links, and that all the maths notation renders. Run: node --test tests/
+// formula links, and that all the maths notation renders. Run: node --test
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';

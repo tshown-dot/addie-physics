@@ -36,7 +36,7 @@ Each chapter is one file in `js/content/`. A chapter lists its big ideas, traps,
 Check the content after any change:
 
 ```bash
-node --test tests/
+node --test
 ```
 
 This verifies every answer key, runs each math generator hundreds of times to confirm the worked steps reach the stated answer, and renders all the maths notation.
