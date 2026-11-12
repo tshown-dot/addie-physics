@@ -7,7 +7,7 @@ const KEY = 'addie_physics_v2';
 const INTERVALS = [0, 1, 2, 4, 7, 14]; // days until an item comes back, by box
 
 function load() {
-  const base = { items: {}, settings: { testDate: '', g: 9.8, extra: [] }, days: {}, tests: [] };
+  const base = { items: {}, settings: { testDate: '', g: 9.8 }, days: {}, tests: [] };
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
     return { ...base, ...saved, settings: { ...base.settings, ...(saved.settings || {}) } };
@@ -26,9 +26,7 @@ export function reset() {
 export const dayNumber = (d = new Date()) => Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000);
 export const today = () => dayNumber();
 
-export function activeChapters() {
-  return [...TEST_CHAPTERS, ...state.settings.extra].sort((a, b) => a - b);
-}
+export const activeChapters = () => TEST_CHAPTERS.slice();
 
 const blank = () => ({ box: 0, due: 0, seen: 0, right: 0, wrong: 0, level: 1, up: -1 });
 export const rec = (key) => state.items[key] || blank();

@@ -50,12 +50,11 @@ function home() {
       : days === 1 ? '<strong>The test is tomorrow.</strong> A light review, then sleep.'
         : days === 0 ? '<strong>Test day.</strong> You have done the work.'
           : 'That test date has passed. Update it below for the next one.';
-  const extra = state.settings.extra;
 
   view.innerHTML = `
     <header class="hero">
       <h1>Hi Addie</h1>
-      <p>Chapters ${TEST_CHAPTERS[0]}–${TEST_CHAPTERS.at(-1)}${extra.length ? ` (+ ${extra.join(', ')})` : ''}. ${countdown}</p>
+      <p>Chapters ${TEST_CHAPTERS[0]}–${TEST_CHAPTERS.at(-1)}. ${countdown}</p>
     </header>
 
     <section class="card today">
@@ -92,8 +91,6 @@ function home() {
       <label>Value of g in math problems
         <select id="g"><option value="9.8" ${state.settings.g === 9.8 ? 'selected' : ''}>9.8 m/s²</option><option value="10" ${state.settings.g === 10 ? 'selected' : ''}>10 m/s²</option></select>
       </label>
-      <label class="check"><input type="checkbox" id="x13" ${extra.includes(13) ? 'checked' : ''}> Include Chapter 13 (Liquids)</label>
-      <label class="check"><input type="checkbox" id="xpast" ${extra.includes(5) ? 'checked' : ''}> Include Chapters 5–8 (for the final)</label>
       <button class="btn danger" id="reset">Reset all progress</button>
     </details>`;
 
@@ -102,27 +99,16 @@ function home() {
   if (weakBtn) weakBtn.onclick = () => start({ title: 'Worth another look', keys: weakSpots(chapters).slice(0, 12).map((it) => it.key), chapters });
   view.querySelector('#testDate').onchange = (e) => { state.settings.testDate = e.target.value; save(); home(); };
   view.querySelector('#g').onchange = (e) => { state.settings.g = Number(e.target.value); save(); };
-  const setExtra = () => {
-    state.settings.extra = [...(view.querySelector('#xpast').checked ? [5, 6, 7, 8] : []), ...(view.querySelector('#x13').checked ? [13] : [])];
-    save();
-    home();
-  };
-  view.querySelector('#x13').onchange = setExtra;
-  view.querySelector('#xpast').onchange = setExtra;
   view.querySelector('#reset').onclick = () => { if (confirm('Erase all saved progress? This cannot be undone.')) { reset(); home(); } };
 }
 
 // ---------- Chapters ----------
 function chapters() {
   setNav('chapters');
-  const active = activeChapters();
   const row = (c) => `<a class="chrow" href="#/chapter/${c.id}"><span class="ico">${c.icon}</span><span class="grow"><strong>Chapter ${c.id}: ${c.title}</strong>${meter(chapterMastery(c.id))}</span><span class="num">${pct(chapterMastery(c.id))}</span></a>`;
-  const others = CHAPTERS.filter((c) => !active.includes(c.id));
   view.innerHTML = `
     <header class="hero"><h1>Chapters</h1><p>Read the big ideas, then practise one chapter at a time.</p></header>
-    <h2 class="section">On this test</h2>
-    <section class="card list">${CHAPTERS.filter((c) => active.includes(c.id)).map(row).join('')}</section>
-    ${others.length ? `<h2 class="section">Other chapters</h2><section class="card list">${others.map(row).join('')}</section>` : ''}`;
+    <section class="card list">${CHAPTERS.map(row).join('')}</section>`;
 }
 
 function chapterPage(id) {

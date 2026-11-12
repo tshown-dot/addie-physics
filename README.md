@@ -1,6 +1,6 @@
 # Addie's Physics Study Hub
 
-A personal study app for Addie's Conceptual Physics course (Hewitt), currently set up for the test on **Chapters 9–12**: Gravity, Projectile & Satellite Motion, The Atomic Nature of Matter, and Solids. Chapter 13 and the earlier Chapters 5–8 can be switched on in Settings.
+A personal study app for Addie's Conceptual Physics course (Hewitt), currently set up for the test on **Chapters 9–12**: Gravity, Projectile & Satellite Motion, The Atomic Nature of Matter, and Solids.
 
 The content is written from the professor's lecture slides, the textbook chapter reviews, and Addie's own notes (including the items she starred as "on the test" and the Lab 5 and Lab 6 equations).
 

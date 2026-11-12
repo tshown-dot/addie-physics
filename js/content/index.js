@@ -2,12 +2,10 @@ import ch9 from './ch9.js';
 import ch10 from './ch10.js';
 import ch11 from './ch11.js';
 import ch12 from './ch12.js';
-import ch13 from './ch13.js';
-import past from './past.js';
 
-// Every chapter, in order. Chapters 9-12 are the current test.
-export const CHAPTERS = [...past, ch9, ch10, ch11, ch12, ch13];
-export const TEST_CHAPTERS = [9, 10, 11, 12];
+// Every chapter, in order.
+export const CHAPTERS = [ch9, ch10, ch11, ch12];
+export const TEST_CHAPTERS = CHAPTERS.map((c) => c.id);
 
 // Flat lookup tables. Item keys look like "q:q9-1", "s:s9-1", "p:p9-farther".
 export const FORMULAS = {};
